@@ -496,12 +496,12 @@
             <span class="meta-value">Su sustojimu Lenkijoje</span>
           </div>
           <div class="meta-tile">
-            <span class="meta-label">Atvykimas</span>
-            <span class="meta-value">Laikas bus patikslintas</span>
+            <span class="meta-label">Struktūra</span>
+            <span class="meta-value">1 vakaras + 1 pilna diena</span>
           </div>
           <div class="meta-tile">
-            <span class="meta-label">Bazė</span>
-            <span class="meta-value">InterContinental</span>
+            <span class="meta-label">3 diena</span>
+            <span class="meta-value">Baseinas + 11:30 išvykimas</span>
           </div>
         </div>
       </div>
@@ -542,27 +542,28 @@
 
       <aside class="panel">
         <ul class="note-list">
-          <li><strong>Išvykimas:</strong> Vilnius 07:00/07:30, Kaunas 08:30/09:00, Marijampolė 09:20/09:50.</li>
-          <li><strong>Tikslus laikas:</strong> bus patikslintas informaciniame laiške prieš kelionę.</li>
-          <li><strong>Kelionė į Lenkiją:</strong> numatytas sustojimas pakelės užeigoje Lenkijoje.</li>
-          <li><strong>Grįžimas:</strong> iš Varšuvos viešbučio 11:30; Marijampolė ~18:30, Kaunas ~19:00, Vilnius ~20:00.</li>
+          <li><strong>Realus formatas:</strong> 1 diena kelionė + vakaras, 2 diena pilna, 3 diena trumpas rytas.</li>
+          <li><strong>3 dienos rytas:</strong> pusryčiai viešbutyje + 2 val. baseinas ant stogo.</li>
+          <li><strong>Išvykimas:</strong> iš Varšuvos viešbučio 11:30; Marijampolė ~18:30, Kaunas ~19:00, Vilnius ~20:00.</li>
+          <li><strong>Planavimo taisyklė:</strong> 2 dieną reikia imti tik svarbiausius objektus, nes tai vienintelė pilna diena.</li>
         </ul>
       </aside>
     </section>
 
     
+    
     <section class="panel" style="margin: 16px 0;">
-      <h2 style="margin-top:0;">Detalizuotas kelionės laikas</h2>
+      <h2 style="margin-top:0;">Kelionės struktūra ir laikai</h2>
       <ul class="note-list">
-        <li><strong>Vilnius:</strong> 07:00 arba 07:30, nuo „Lux Express” stotelės prie PC „Panorama”.</li>
-        <li><strong>Kaunas:</strong> 08:30 arba 09:00, nuo „Mega” prekybos centro, tarp administracinio „Senukų” pastato ir Megos „Rimi” esančios autobusų aikštelės.</li>
-        <li><strong>Marijampolė:</strong> 09:20 arba 09:50, nuo traukinių stoties aikštelės, Stoties g. 2.</li>
-        <li><strong>Papildomi sustojimai:</strong> Elektrėnai, Vievis, Žiežmariai — laikas bus patikslintas likus 2–6 dienoms iki kelionės.</li>
+        <li><strong>1 diena:</strong> kelionė į Varšuvą, check-in, lengvas vakarinis pasivaikščiojimas centre.</li>
+        <li><strong>2 diena:</strong> vienintelė pilna diena Varšuvoje — senamiestis, Royal Route, muziejus arba upės zona.</li>
+        <li><strong>3 diena:</strong> pusryčiai viešbutyje, 2 val. baseinas ant stogo, check-out ir išvykimas 11:30.</li>
+        <li><strong>Išvykimas į kelionę:</strong> Vilnius 07:00/07:30, Kaunas 08:30/09:00, Marijampolė 09:20/09:50.</li>
         <li><strong>Į Lenkiją:</strong> sustojimas pakelės užeigoje, kur bus galima užkąsti.</li>
         <li><strong>Atgal:</strong> išvykimas iš Varšuvos viešbučio 11:30; Marijampolė apie 18:30, Kaunas apie 19:00, Vilnius apie 20:00.</li>
-        <li><strong>Grįžtant:</strong> sustojimas greito maisto restorane.</li>
       </ul>
     </section>
+
 
 
     <div id="app"></div>
@@ -702,21 +703,21 @@
       {
         id: "d2-breakfast",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "09:30",
-        title: "Pusryčiai centre",
-        description: "Pradėti be skubėjimo. Nuo viešbučio patogu eiti link Royal Route.",
-        tags: ["food", "start"],
-        map: "https://www.google.com/maps/search/?api=1&query=breakfast+near+InterContinental+Warszawa",
+        title: "Pusryčiai viešbutyje",
+        description: "Pusryčiai viešbutyje. Po jų pradėti pilną Varšuvos dieną nuo centro / Royal Route.",
+        tags: ["hotel", "food", "start"],
+        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
         must: false,
         food: true
       },
       {
         id: "d2-royal-route",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "10:30",
         title: "Krakowskie Przedmieście / Royal Route",
         description: "Eiti nuo centro link senamiesčio per gražiausią istorinę kryptį.",
@@ -727,8 +728,8 @@
       {
         id: "d2-presidential",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "11:15",
         title: "Presidential Palace + University of Warsaw vartai",
         description: "Trumpi sustojimai pakeliui. Gerai nuotraukoms ir miesto masteliui pajusti.",
@@ -739,8 +740,8 @@
       {
         id: "d2-castle-square",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "12:00",
         title: "Castle Square / Plac Zamkowy",
         description: "Įėjimas į senamiestį. Čia prasideda klasikinė Varšuva.",
@@ -751,8 +752,8 @@
       {
         id: "d2-royal-castle",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "12:20",
         title: "Royal Castle",
         description: "Jei norisi vidaus — užsukti. Jei ne, pakanka aikštės ir išorės.",
@@ -763,8 +764,8 @@
       {
         id: "d2-old-town",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "13:00",
         title: "Old Town Market Square",
         description: "Pagrindinė senamiesčio vieta. Pasivaikščioti, nuotraukos, kava arba pietūs.",
@@ -775,8 +776,8 @@
       {
         id: "d2-barbican",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "14:00",
         title: "Warsaw Barbican",
         description: "Trumpas sustojimas prie miesto sienų. Logiška po senamiesčio aikštės.",
@@ -787,8 +788,8 @@
       {
         id: "d2-polin",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "15:30",
         title: "POLIN Museum arba Warsaw Uprising Museum",
         description: "Rinkitės vieną, ne abu. POLIN — gilesnė istorija, Uprising — stipresnė karo/miesto atstatymo tema.",
@@ -800,8 +801,8 @@
       {
         id: "d2-vistula",
         day: "day-2",
-        dayTitle: "Diena 2 — Senamiestis + istorija",
-        dayDescription: "Tikslas: stipriausia miesto diena — Royal Route, Old Town ir vienas rimtas muziejus.",
+        dayTitle: "Diena 2 — Pilna Varšuvos diena",
+        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
         time: "19:00",
         title: "Vistula Boulevards vakare",
         description: "Jei oras geras — upės krantinė yra geras vakaro uždarymas.",
@@ -814,35 +815,35 @@
       {
         id: "d3-lazienki",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir paskutinis vakaras",
-        dayDescription: "Tikslas: ramesnis, gražesnis maršrutas be perdegimo.",
-        time: "10:00",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "Tik jei liktų papildoma diena",
         title: "Łazienki Królewskie parkas",
-        description: "Viena geriausių vietų lėtesniam rytui. Parkas, rūmai, vanduo, daug erdvės.",
-        tags: ["must see", "park"],
+        description: "Šito realiai neplanuoti 3 dienos rytą, nes 11:30 išvykimas. Palikti kaip alternatyvą, jei programa pasikeistų.",
+        tags: ["optional", "park"],
         map: "https://www.google.com/maps/search/?api=1&query=Lazienki+Krolewskie+Warsaw",
-        must: true
+        must: false
       },
       {
         id: "d3-palace-isle",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir paskutinis vakaras",
-        dayDescription: "Tikslas: ramesnis, gražesnis maršrutas be perdegimo.",
-        time: "11:15",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "Tik jei liktų papildoma diena",
         title: "Palace on the Isle",
-        description: "Gražiausias Łazienki parko taškas. Užtenka lėtai apeiti ir pasėdėti.",
-        tags: ["park", "photo"],
+        description: "Palikti kaip papildomą opciją, ne pagrindinį 3 dienos planą.",
+        tags: ["optional", "park"],
         map: "https://www.google.com/maps/search/?api=1&query=Palace+on+the+Isle+Warsaw",
         must: false
       },
       {
         id: "d3-ujazdow",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir paskutinis vakaras",
-        dayDescription: "Tikslas: ramesnis, gražesnis maršrutas be perdegimo.",
-        time: "12:30",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "Tik jei liktų papildoma diena",
         title: "Ujazdów / ambasadų rajonas",
-        description: "Gražus perėjimas iš parko link centro. Galima keisti Bolt/tramvajumi, jei pavargę.",
+        description: "Netelpa į realų 3 dienos rytą, bet verta turėti kaip atsarginį variantą.",
         tags: ["walk", "optional"],
         map: "https://www.google.com/maps/search/?api=1&query=Ujazdow+Warsaw",
         must: false
@@ -850,9 +851,9 @@
       {
         id: "d3-hala",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir paskutinis vakaras",
-        dayDescription: "Tikslas: ramesnis, gražesnis maršrutas be perdegimo.",
-        time: "14:00",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "Tik jei liktų papildoma diena",
         title: "Hala Koszyki pietums",
         description: "Patogi vieta, kai draugams sunku susitarti dėl maisto — daug pasirinkimų vienoje vietoje.",
         tags: ["food", "chill"],
@@ -863,9 +864,9 @@
       {
         id: "d3-copernicus",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir paskutinis vakaras",
-        dayDescription: "Tikslas: ramesnis, gražesnis maršrutas be perdegimo.",
-        time: "16:00",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "Tik jei liktų papildoma diena",
         title: "Copernicus Science Centre arba National Museum",
         description: "Jei norisi vidaus veiklos. Jei oras geras, galima praleisti ir eiti prie upės.",
         tags: ["optional", "museum"],
@@ -876,9 +877,9 @@
       {
         id: "d3-powisle",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir paskutinis vakaras",
-        dayDescription: "Tikslas: ramesnis, gražesnis maršrutas be perdegimo.",
-        time: "18:30",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "Tik jei liktų papildoma diena",
         title: "Elektrownia Powiśle / paskutinis vakaras",
         description: "Maistas, gėrimai, chill. Geras finalas prieš grįžimą į viešbutį.",
         tags: ["food", "evening"],
@@ -888,10 +889,47 @@
       },
 
       {
+        id: "d3-breakfast-hotel",
+        day: "day-3",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "07:30–08:15",
+        title: "Pusryčiai viešbutyje",
+        description: "Pavalgyti be skubėjimo, po pusryčių pasiruošti baseinui ir check-out. Daiktus geriausia susidėti dar prieš pusryčius.",
+        tags: ["hotel", "food", "important"],
+        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
+        must: true,
+        food: true
+      },
+      {
+        id: "d3-rooftop-pool",
+        day: "day-3",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "08:30–10:30",
+        title: "2 val. baseinas ant stogo",
+        description: "Pagrindinis 3 dienos rytas. Po baseino palikti bent 45–60 min. persirengimui, daiktams ir nusileidimui į išvykimo vietą.",
+        tags: ["hotel", "pool", "must see"],
+        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa+pool",
+        must: true
+      },
+      {
+        id: "d3-checkout",
+        day: "day-3",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time: "10:30–11:15",
+        title: "Check-out ir pasiruošimas išvykimui",
+        description: "Persirengti, susidėti šlapius daiktus atskirai, pasiimti dokumentus, telefoną, powerbanką ir nusileisti prie autobuso.",
+        tags: ["hotel", "return", "important"],
+        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
+        must: true
+      },
+      {
         id: "return-hotel",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir grįžimas",
-        dayDescription: "Tikslas: turėti aiškų grįžimo laiką ir nepalikti daiktų viešbutyje.",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
         time: "11:30",
         title: "Išvykimas iš Varšuvos viešbučio",
         description: "Autobusas išvyksta nuo viešbučio 11:30. Prieš tai pasidaryti check-out ir susidėti daiktus.",
@@ -902,8 +940,8 @@
       {
         id: "return-food-stop",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir grįžimas",
-        dayDescription: "Tikslas: turėti aiškų grįžimo laiką ir nepalikti daiktų viešbutyje.",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
         time: "Grįžtant",
         title: "Sustojimas greito maisto restorane",
         description: "Grįžtant iš Lenkijos į Lietuvą numatytas sustojimas greito maisto restorane.",
@@ -915,8 +953,8 @@
       {
         id: "return-lithuania",
         day: "day-3",
-        dayTitle: "Diena 3 — parkas, upė ir grįžimas",
-        dayDescription: "Tikslas: turėti aiškų grįžimo laiką ir nepalikti daiktų viešbutyje.",
+        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
         time: "18:30–20:00",
         title: "Grįžimas į Lietuvą",
         description: "Preliminariai: Marijampolė apie 18:30, Kaunas apie 19:00, Vilnius apie 20:00.",
