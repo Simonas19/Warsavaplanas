@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Varšuva per 3 dienas — checklist</title>
-  <meta name="description" content="3 dienų Varšuvos kelionės planas su checklist, žemėlapio nuorodomis ir localStorage progresu." />
   <style>
     :root {
       --bg: #f6f1e8;
@@ -20,458 +19,93 @@
       --shadow: 0 18px 40px rgba(25, 23, 20, 0.08);
       --radius: 22px;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(138, 63, 34, 0.15), transparent 30rem),
-        radial-gradient(circle at bottom right, rgba(31, 61, 58, 0.13), transparent 28rem),
+        radial-gradient(circle at top left, rgba(138,63,34,0.15), transparent 30rem),
+        radial-gradient(circle at bottom right, rgba(31,61,58,0.13), transparent 28rem),
         var(--bg);
       color: var(--ink);
       line-height: 1.5;
     }
-
-    a {
-      color: inherit;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    .shell {
-      width: min(980px, calc(100% - 28px));
-      margin: 0 auto;
-    }
-
-    .hero {
-      padding: 28px 0 18px;
-    }
-
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .shell { width: min(980px, calc(100% - 28px)); margin: 0 auto; }
+    .hero { padding: 28px 0 18px; }
     .hero-card {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 30px;
+      position: relative; overflow: hidden;
+      border: 1px solid var(--line); border-radius: 30px;
       background: linear-gradient(135deg, #1d1a16, #3a2a22 55%, #1f3d3a);
-      color: #fffaf1;
-      padding: 28px;
-      box-shadow: var(--shadow);
+      color: #fffaf1; padding: 28px; box-shadow: var(--shadow);
     }
-
     .hero-card::after {
-      content: "";
-      position: absolute;
-      right: -80px;
-      top: -80px;
-      width: 260px;
-      height: 260px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 250, 241, 0.22);
-      background: rgba(255, 250, 241, 0.05);
+      content: ""; position: absolute; right: -80px; top: -80px;
+      width: 260px; height: 260px; border-radius: 999px;
+      border: 1px solid rgba(255,250,241,0.22);
+      background: rgba(255,250,241,0.05);
     }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      color: rgba(255, 250, 241, 0.74);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 760px;
-      font-size: clamp(34px, 7vw, 68px);
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-    }
-
-    .hero-text {
-      margin: 16px 0 0;
-      max-width: 680px;
-      color: rgba(255, 250, 241, 0.82);
-      font-size: 16px;
-    }
-
-    .hero-meta {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .meta-tile {
-      padding: 14px;
-      border: 1px solid rgba(255, 250, 241, 0.16);
-      border-radius: 18px;
-      background: rgba(255, 250, 241, 0.08);
-      backdrop-filter: blur(12px);
-    }
-
-    .meta-label {
-      display: block;
-      margin-bottom: 4px;
-      color: rgba(255, 250, 241, 0.62);
-      font-size: 12px;
-    }
-
-    .meta-value {
-      display: block;
-      font-weight: 800;
-      font-size: 15px;
-    }
-
-    .sticky {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      padding: 10px 0;
-      backdrop-filter: blur(18px);
-      background: rgba(246, 241, 232, 0.82);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
-
-    .tab {
-      border: 1px solid var(--line);
-      background: rgba(255, 250, 241, 0.72);
-      color: var(--ink);
-      padding: 10px 13px;
-      border-radius: 999px;
-      white-space: nowrap;
-      cursor: pointer;
-      font-weight: 750;
-    }
-
-    .tab.active {
-      background: var(--ink);
-      color: var(--card);
-      border-color: var(--ink);
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 14px;
-      margin: 16px 0;
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 250, 241, 0.75);
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-
-    .progress-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .ring {
-      width: 82px;
-      height: 82px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      background: conic-gradient(var(--accent-2) var(--progress, 0%), var(--soft) 0);
-      flex: 0 0 auto;
-    }
-
-    .ring-inner {
-      width: 62px;
-      height: 62px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      background: var(--card);
-      font-weight: 900;
-      font-size: 14px;
-    }
-
-    .progress-title {
-      margin: 0;
-      font-size: 20px;
-      letter-spacing: -0.03em;
-    }
-
-    .progress-sub {
-      margin: 4px 0 0;
-      color: var(--muted);
-    }
-
-    .quick-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .action {
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 9px 12px;
-      cursor: pointer;
-      font-weight: 750;
-    }
-
-    .action.danger {
-      color: var(--danger);
-    }
-
-    .note-list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .note-list strong {
-      color: var(--ink);
-    }
-
-    .day {
-      margin: 22px 0 30px;
-    }
-
-    .day-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
-
-    .day h2 {
-      margin: 0;
-      font-size: clamp(26px, 5vw, 42px);
-      letter-spacing: -0.05em;
-    }
-
-    .day-desc {
-      margin: 4px 0 0;
-      color: var(--muted);
-    }
-
-    .day-count {
-      white-space: nowrap;
-      color: var(--muted);
-      font-weight: 750;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 12px;
-    }
-
-    .place {
-      position: relative;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--card);
-      box-shadow: 0 10px 28px rgba(25, 23, 20, 0.055);
-      padding: 16px;
-      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
-    }
-
-    .place:hover {
-      transform: translateY(-2px);
-    }
-
-    .place.done {
-      opacity: 0.62;
-      border-color: rgba(107, 127, 93, 0.35);
-    }
-
-    .place-top {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px;
-      align-items: start;
-    }
-
-    .check {
-      appearance: none;
-      width: 28px;
-      height: 28px;
-      border: 2px solid rgba(25, 23, 20, 0.22);
-      border-radius: 9px;
-      background: #fff;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      margin-top: 2px;
-    }
-
-    .check:checked {
-      border-color: var(--done);
-      background: var(--done);
-    }
-
-    .check:checked::after {
-      content: "✓";
-      color: white;
-      font-weight: 900;
-      font-size: 18px;
-      transform: translateY(-1px);
-    }
-
-    .time {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--accent);
-      font-weight: 900;
-      font-size: 13px;
-      letter-spacing: 0.02em;
-    }
-
-    .place h3 {
-      margin: 4px 0 5px;
-      font-size: 20px;
-      letter-spacing: -0.035em;
-      line-height: 1.12;
-    }
-
-    .place.done h3 {
-      text-decoration: line-through;
-    }
-
-    .desc {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 12px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      background: var(--soft);
-      padding: 5px 9px;
-      color: #4a3627;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .tag.must {
-      background: rgba(138, 63, 34, 0.13);
-      color: var(--accent);
-    }
-
-    .tag.near {
-      background: rgba(31, 61, 58, 0.12);
-      color: var(--accent-2);
-    }
-
-    .place-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 13px;
-    }
-
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      text-decoration: none;
-      border: 1px solid var(--line);
-      background: #fff;
-      border-radius: 999px;
-      padding: 8px 10px;
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .food {
-      border-style: dashed;
-      background: rgba(255, 250, 241, 0.58);
-    }
-
-    .footer {
-      padding: 22px 0 34px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
+    .eyebrow { margin: 0 0 8px; color: rgba(255,250,241,0.74); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; max-width: 760px; font-size: clamp(34px,7vw,68px); line-height: 0.95; letter-spacing: -0.06em; }
+    .hero-text { margin: 16px 0 0; max-width: 680px; color: rgba(255,250,241,0.82); font-size: 16px; }
+    .hero-meta { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 22px; }
+    .meta-tile { padding: 14px; border: 1px solid rgba(255,250,241,0.16); border-radius: 18px; background: rgba(255,250,241,0.08); backdrop-filter: blur(12px); }
+    .meta-label { display: block; margin-bottom: 4px; color: rgba(255,250,241,0.62); font-size: 12px; }
+    .meta-value { display: block; font-weight: 800; font-size: 15px; }
+    .sticky { position: sticky; top: 0; z-index: 10; padding: 10px 0; backdrop-filter: blur(18px); background: rgba(246,241,232,0.82); border-bottom: 1px solid var(--line); }
+    .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+    .tab { border: 1px solid var(--line); background: rgba(255,250,241,0.72); color: var(--ink); padding: 10px 13px; border-radius: 999px; white-space: nowrap; cursor: pointer; font-weight: 750; }
+    .tab.active { background: var(--ink); color: var(--card); border-color: var(--ink); }
+    .summary-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin: 16px 0; }
+    .panel { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,250,241,0.75); box-shadow: var(--shadow); padding: 18px; }
+    .progress-wrap { display: flex; align-items: center; gap: 14px; }
+    .ring { width: 82px; height: 82px; border-radius: 999px; display: grid; place-items: center; background: conic-gradient(var(--accent-2) var(--progress,0%), var(--soft) 0); flex: 0 0 auto; }
+    .ring-inner { width: 62px; height: 62px; border-radius: 999px; display: grid; place-items: center; background: var(--card); font-weight: 900; font-size: 14px; }
+    .progress-title { margin: 0; font-size: 20px; letter-spacing: -0.03em; }
+    .progress-sub { margin: 4px 0 0; color: var(--muted); }
+    .quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .action { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 9px 12px; cursor: pointer; font-weight: 750; }
+    .action.danger { color: var(--danger); }
+    .note-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .note-list strong { color: var(--ink); }
+    .day { margin: 22px 0 30px; }
+    .day-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+    .day h2 { margin: 0; font-size: clamp(26px,5vw,42px); letter-spacing: -0.05em; }
+    .day-desc { margin: 4px 0 0; color: var(--muted); }
+    .day-count { white-space: nowrap; color: var(--muted); font-weight: 750; }
+    .timeline { display: grid; gap: 12px; }
+    .place { position: relative; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); box-shadow: 0 10px 28px rgba(25,23,20,0.055); padding: 16px; transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease; }
+    .place:hover { transform: translateY(-2px); }
+    .place.done { opacity: 0.62; border-color: rgba(107,127,93,0.35); }
+    .place-top { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+    .check { appearance: none; width: 28px; height: 28px; border: 2px solid rgba(25,23,20,0.22); border-radius: 9px; background: #fff; cursor: pointer; display: grid; place-items: center; margin-top: 2px; }
+    .check:checked { border-color: var(--done); background: var(--done); }
+    .check:checked::after { content: "✓"; color: white; font-weight: 900; font-size: 18px; transform: translateY(-1px); }
+    .time { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 900; font-size: 13px; letter-spacing: 0.02em; }
+    .place h3 { margin: 4px 0 5px; font-size: 20px; letter-spacing: -0.035em; line-height: 1.12; }
+    .place.done h3 { text-decoration: line-through; }
+    .desc { margin: 0; color: var(--muted); font-size: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .tag { display: inline-flex; align-items: center; border-radius: 999px; background: var(--soft); padding: 5px 9px; color: #4a3627; font-size: 12px; font-weight: 800; }
+    .tag.must { background: rgba(138,63,34,0.13); color: var(--accent); }
+    .tag.near { background: rgba(31,61,58,0.12); color: var(--accent-2); }
+    .place-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+    .link-btn { display: inline-flex; align-items: center; gap: 7px; text-decoration: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 10px; font-size: 13px; font-weight: 850; }
+    .food { border-style: dashed; background: rgba(255,250,241,0.58); }
+    .footer { padding: 22px 0 34px; color: var(--muted); font-size: 13px; }
     @media (max-width: 760px) {
-      .hero-card {
-        padding: 22px;
-        border-radius: 24px;
-      }
-
-      .hero-meta {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .day-head {
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .day-count {
-        white-space: normal;
-      }
+      .hero-card { padding: 22px; border-radius: 24px; }
+      .hero-meta { grid-template-columns: repeat(2,1fr); }
+      .summary-grid { grid-template-columns: 1fr; }
+      .day-head { align-items: start; flex-direction: column; }
+      .day-count { white-space: normal; }
     }
-
     @media print {
-      body {
-        background: white;
-      }
-
-      .sticky,
-      .quick-actions,
-      .place-actions {
-        display: none;
-      }
-
-      .place {
-        break-inside: avoid;
-        box-shadow: none;
-      }
-
-      .hero-card,
-      .panel {
-        box-shadow: none;
-      }
+      body { background: white; }
+      .sticky, .quick-actions, .place-actions { display: none; }
+      .place { break-inside: avoid; box-shadow: none; }
     }
   </style>
 </head>
@@ -482,27 +116,14 @@
         <p class="eyebrow">Kelionės checklist · Varšuva</p>
         <h1>3 dienos Varšuvoje su draugu</h1>
         <p class="hero-text">
-          Planas nuo InterContinental Warszawa: pirmą dieną ankstyvas išvykimas ir lengvas centras,
-          antrą — senamiestis ir muziejus, trečią — parkas, upė ir chill maistas.
+          Planas nuo InterContinental Warszawa: pirmą dieną baseinas viešbutyje ir vakaras prie Stalino piršto,
+          antrą — pilnas maršrutas nuo Karališkosios gatvės iki dviejų muziejų, trečią — baseinas ant stogo ir išvykimas.
         </p>
-
         <div class="hero-meta">
-          <div class="meta-tile">
-            <span class="meta-label">Išvykimas</span>
-            <span class="meta-value">Vilnius · 07:00/07:30</span>
-          </div>
-          <div class="meta-tile">
-            <span class="meta-label">Kelionė</span>
-            <span class="meta-value">Su sustojimu Lenkijoje</span>
-          </div>
-          <div class="meta-tile">
-            <span class="meta-label">Struktūra</span>
-            <span class="meta-value">1 vakaras + 1 pilna diena</span>
-          </div>
-          <div class="meta-tile">
-            <span class="meta-label">3 diena</span>
-            <span class="meta-value">Baseinas + 11:30 išvykimas</span>
-          </div>
+          <div class="meta-tile"><span class="meta-label">Išvykimas</span><span class="meta-value">Vilnius · 07:00/07:30</span></div>
+          <div class="meta-tile"><span class="meta-label">1 diena</span><span class="meta-value">Baseinas + Stalino pirštas</span></div>
+          <div class="meta-tile"><span class="meta-label">2 diena</span><span class="meta-value">Pilnas Varšuvos maršrutas</span></div>
+          <div class="meta-tile"><span class="meta-label">3 diena</span><span class="meta-value">Baseinas ant stogo + 11:30</span></div>
         </div>
       </div>
     </div>
@@ -525,9 +146,7 @@
     <section class="summary-grid">
       <div class="panel">
         <div class="progress-wrap">
-          <div class="ring" id="ring">
-            <div class="ring-inner" id="percent">0%</div>
-          </div>
+          <div class="ring" id="ring"><div class="ring-inner" id="percent">0%</div></div>
           <div>
             <h2 class="progress-title">Kelionės progresas</h2>
             <p class="progress-sub" id="progressText">Dar niekas nepažymėta.</p>
@@ -539,454 +158,246 @@
           </div>
         </div>
       </div>
-
       <aside class="panel">
         <ul class="note-list">
-          <li><strong>Realus formatas:</strong> 1 diena kelionė + vakaras, 2 diena pilna, 3 diena trumpas rytas.</li>
-          <li><strong>3 dienos rytas:</strong> pusryčiai viešbutyje + 2 val. baseinas ant stogo.</li>
-          <li><strong>Išvykimas:</strong> iš Varšuvos viešbučio 11:30; Marijampolė ~18:30, Kaunas ~19:00, Vilnius ~20:00.</li>
-          <li><strong>Planavimo taisyklė:</strong> 2 dieną reikia imti tik svarbiausius objektus, nes tai vienintelė pilna diena.</li>
+          <li><strong>1 diena:</strong> atvykimas ~16:30–17:00, baseinas viešbutyje, vakaras — Stalino pirštas + vakarienė.</li>
+          <li><strong>2 diena:</strong> 09:00–22:00 — Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla.</li>
+          <li><strong>3 diena:</strong> pusryčiai + 2 val. baseinas ant stogo, check-out 11:30.</li>
+          <li><strong>Muziejų bilietai:</strong> Karališkoji pilis, Sukilimo ir Koperniko — rekomenduojama pirkti iš anksto internetu.</li>
         </ul>
       </aside>
     </section>
 
-    
-    
-    <section class="panel" style="margin: 16px 0;">
-      <h2 style="margin-top:0;">Kelionės struktūra ir laikai</h2>
-      <ul class="note-list">
-        <li><strong>1 diena:</strong> kelionė į Varšuvą, check-in, lengvas vakarinis pasivaikščiojimas centre.</li>
-        <li><strong>2 diena:</strong> vienintelė pilna diena Varšuvoje — senamiestis, Royal Route, muziejus arba upės zona.</li>
-        <li><strong>3 diena:</strong> pusryčiai viešbutyje, 2 val. baseinas ant stogo, check-out ir išvykimas 11:30.</li>
-        <li><strong>Išvykimas į kelionę:</strong> Vilnius 07:00/07:30, Kaunas 08:30/09:00, Marijampolė 09:20/09:50.</li>
-        <li><strong>Į Lenkiją:</strong> sustojimas pakelės užeigoje, kur bus galima užkąsti.</li>
-        <li><strong>Atgal:</strong> išvykimas iš Varšuvos viešbučio 11:30; Marijampolė apie 18:30, Kaunas apie 19:00, Vilnius apie 20:00.</li>
-      </ul>
-    </section>
-
-
-
     <div id="app"></div>
 
     <footer class="footer">
-      Sukurta kaip offline-friendly vieno failo planas. Checkbox’ai išsaugomi šiame telefone/naršyklėje per localStorage.
+      Sukurta kaip offline-friendly vieno failo planas. Checkbox'ai išsaugomi šiame telefone/naršyklėje per localStorage.
     </footer>
   </main>
 
   <script>
     const places = [
-      // DAY 1
+      // ── DIENA 1 ────────────────────────────────────────────────
       {
-        id: "d1-travel-vilnius",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "07:00 / 07:30",
-        title: "Išvykimas iš Vilniaus",
-        description: "Nuo „Lux Express” stotelės prie PC „Panorama”. Tikslus laikas priklauso nuo autobusų skaičiaus ir bus patikslintas informaciniame laiške.",
-        tags: ["travel", "important"],
-        map: "https://www.google.com/maps/search/?api=1&query=PC+Panorama+Vilnius+Lux+Express+stop",
-        must: true
+        id:"prep-docs", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"Prieš išvykstant", title:"Dokumentai, bilietai, rezervacija",
+        description:"Turėti bilietą, asmens dokumentą, viešbučio rezervaciją, tikslų išvykimo laiką ir viešbučio adresą telefone/offline.",
+        tags:["important","prep"], map:"", must:true
       },
       {
-        id: "d1-travel-kaunas",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "08:30 / 09:00",
-        title: "Paėmimas Kaune",
-        description: "Nuo „Mega” prekybos centro: autobusų aikštelė tarp administracinio „Senukų” pastato ir Megos „Rimi”.",
-        tags: ["travel"],
-        map: "https://www.google.com/maps/search/?api=1&query=Mega+Kaunas+Rimi+Senukai",
-        must: false
+        id:"prep-offline", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"Prieš išvykstant", title:"Atsisiųsti offline Google Maps",
+        description:"Atsisiųsti Varšuvos centro zoną, kad planas veiktų net su prastu internetu.",
+        tags:["prep"], map:"https://www.google.com/maps/search/?api=1&query=Warsaw+city+centre", must:false
       },
       {
-        id: "d1-travel-marijampole",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "09:20 / 09:50",
-        title: "Paėmimas Marijampolėje",
-        description: "Nuo traukinių stoties aikštelės, Stoties g. 2.",
-        tags: ["travel"],
-        map: "https://www.google.com/maps/search/?api=1&query=Stoties+g.+2+Marijampole",
-        must: false
+        id:"d1-travel-vilnius", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"07:00 / 07:30", title:"Išvykimas iš Vilniaus",
+        description:"Nuo „Lux Express" stotelės prie PC „Panorama". Tikslus laikas bus patikslintas informaciniame laiške.",
+        tags:["travel","important"], map:"https://www.google.com/maps/search/?api=1&query=PC+Panorama+Vilnius+Lux+Express+stop", must:true
       },
       {
-        id: "d1-extra-stops",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "2–6 d. prieš",
-        title: "Papildomi sustojimai",
-        description: "Elektrėnai, Vievis ir Žiežmariai bus patikslinti likus 2–6 dienoms iki kelionės kartu su informaciniu pranešimu.",
-        tags: ["info", "travel"],
-        map: "",
-        must: false
+        id:"d1-travel-kaunas", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"08:30 / 09:00", title:"Paėmimas Kaune",
+        description:"Nuo „Mega" prekybos centro: autobusų aikštelė tarp administracinio „Senukų" pastato ir Megos „Rimi".",
+        tags:["travel"], map:"https://www.google.com/maps/search/?api=1&query=Mega+Kaunas+Rimi+Senukai", must:false
       },
       {
-        id: "d1-food-stop-poland",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "Kelionės metu",
-        title: "Sustojimas pakelės užeigoje Lenkijoje",
-        description: "Numatytas sustojimas, kur bus galima užkąsti. Gerai turėti ir savo vandens/snack’ų.",
-        tags: ["food", "travel"],
-        map: "",
-        must: false,
-        food: true
+        id:"d1-travel-marijampole", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"09:20 / 09:50", title:"Paėmimas Marijampolėje",
+        description:"Nuo traukinių stoties aikštelės, Stoties g. 2.",
+        tags:["travel"], map:"https://www.google.com/maps/search/?api=1&query=Stoties+g.+2+Marijampole", must:false
       },
       {
-        id: "d1-arrival-warsaw",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "Vakare",
-        title: "Atvykimas į Varšuvą",
-        description: "Tikslus atvykimo laikas priklausys nuo išvykimo varianto, sustojimų ir eismo. Pirmą vakarą planas paliktas lengvas.",
-        tags: ["travel", "important"],
-        map: "https://www.google.com/maps/search/?api=1&query=Warsaw",
-        must: false
+        id:"d1-food-stop-poland", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"Kelionės metu", title:"Sustojimas pakelės užeigoje Lenkijoje",
+        description:"Numatytas sustojimas, kur bus galima užkąsti. Gerai turėti ir savo vandens / snack'ų.",
+        tags:["food","travel"], map:"", must:false, food:true
       },
       {
-        id: "d1-hotel",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "16:30",
-        title: "Check-in: InterContinental Warszawa",
-        description: "Palikti daiktus, trumpai pailsėti, pasikrauti telefonus. Viešbutis patogiai centre.",
-        tags: ["near hotel", "important"],
-        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
-        must: true
+        id:"d1-hotel", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"16:30–17:00", title:"Check-in: InterContinental Warszawa",
+        description:"Palikti daiktus, maudymosi kostiumą paimti atskirai — iš karto po įsiregistravimo einame į viešbučio baseiną.",
+        tags:["near hotel","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:true
       },
       {
-        id: "d1-palace",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "18:00",
-        title: "Palace of Culture and Science",
-        description: "Pirmas orientyras šalia viešbučio. Galima tik apeiti iš išorės arba kilti į apžvalgos aikštelę, jei yra noro.",
-        tags: ["near hotel", "must see"],
-        map: "https://www.google.com/maps/search/?api=1&query=Palace+of+Culture+and+Science+Warsaw",
-        must: true
+        id:"d1-pool", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"17:15–18:30", title:"Viešbučio baseinas",
+        description:"Atsipalaiduoti po ilgos kelionės prieš vakarinį pasivaikščiojimą. Po baseino persirengti ir eiti į miestą.",
+        tags:["hotel","pool","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa+pool", must:true
       },
       {
-        id: "d1-zlote",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "18:45",
-        title: "Złote Tarasy / trumpas maistas",
-        description: "Patogu šalia viešbučio, jei norisi paprasto maisto be papildomos logistikos.",
-        tags: ["food", "near hotel"],
-        map: "https://www.google.com/maps/search/?api=1&query=Zlote+Tarasy+Warsaw",
-        must: false,
-        food: true
+        id:"d1-palace", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"19:00", title:"Palace of Culture — „Stalino pirštas"",
+        description:"5 min. pėsčiomis nuo viešbučio. Vakare labai efektingai apšviestas. Apeiti iš išorės, nusifotografuoti. Galima kilti į apžvalgos aikštelę (30+ aukštas) — vaizas į naktinę Varšuvą.",
+        tags:["near hotel","must see"], map:"https://www.google.com/maps/search/?api=1&query=Palace+of+Culture+and+Science+Warsaw", must:true
       },
       {
-        id: "d1-nowy-swiat",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "19:45",
-        title: "Nowy Świat vakarinis pasivaikščiojimas",
-        description: "Gyva centrinė gatvė. Geras pirmos dienos maršrutas be didelio tempo.",
-        tags: ["walk", "evening"],
-        map: "https://www.google.com/maps/search/?api=1&query=Nowy+Swiat+Warsaw",
-        must: false
+        id:"d1-dinner", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"19:45", title:"Vakarienė šalia Stalino piršto",
+        description:"Paprasta ir greita: „Złote Tarasy" PC tiesiai šalia viešbučio. Arba 10 min. pėsčiomis — restoranai Nowy Świat gatvėje. Nereikia toli eiti — rytoj pilna diena.",
+        tags:["food","near hotel"], map:"https://www.google.com/maps/search/?api=1&query=restaurants+near+Palace+of+Culture+Warsaw", must:false, food:true
       },
 
-      // DAY 2
+      // ── DIENA 2 ────────────────────────────────────────────────
       {
-        id: "d2-breakfast",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "09:30",
-        title: "Pusryčiai viešbutyje",
-        description: "Pusryčiai viešbutyje. Po jų pradėti pilną Varšuvos dieną nuo centro / Royal Route.",
-        tags: ["hotel", "food", "start"],
-        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
-        must: false,
-        food: true
+        id:"d2-breakfast", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"09:00–09:45", title:"Pusryčiai viešbutyje",
+        description:"Gerai pavalgyti prieš intensyvią dieną. Pasiimti vandens ir užkandžių — po pietų ilga muziejų sesija.",
+        tags:["hotel","food","start"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:false, food:true
       },
       {
-        id: "d2-royal-route",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "10:30",
-        title: "Krakowskie Przedmieście / Royal Route",
-        description: "Eiti nuo centro link senamiesčio per gražiausią istorinę kryptį.",
-        tags: ["walk", "must see"],
-        map: "https://www.google.com/maps/search/?api=1&query=Krakowskie+Przedmiescie+Warsaw",
-        must: true
+        id:"d2-royal-route", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"10:00–11:30", title:"Krakowskie Przedmieście — Karališkoji gatvė",
+        description:"Gražiausia istorinė gatvė Varšuvoje. Eiti nuo centro link senamiesčio: Šv. Kryžiaus bažnyčia (Šopeno širdis čia!), Varšuvos universiteto vartai, Prezidento rūmai. Geriausia dienos pradžia.",
+        tags:["walk","must see"], map:"https://www.google.com/maps/search/?api=1&query=Krakowskie+Przedmiescie+Warsaw", must:true
       },
       {
-        id: "d2-presidential",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "11:15",
-        title: "Presidential Palace + University of Warsaw vartai",
-        description: "Trumpi sustojimai pakeliui. Gerai nuotraukoms ir miesto masteliui pajusti.",
-        tags: ["walk", "quick stop"],
-        map: "https://www.google.com/maps/search/?api=1&query=Presidential+Palace+Warsaw",
-        must: false
+        id:"d2-castle-square", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"11:30", title:"Zamkowy aikštė — įėjimas į senamiestį",
+        description:"Sigizmundo kolona ir panorama į Vislą. Čia prasideda klasikinė Varšuva — puikus sustojimas prieš pilį.",
+        tags:["must see","old town"], map:"https://www.google.com/maps/search/?api=1&query=Castle+Square+Warsaw", must:true
       },
       {
-        id: "d2-castle-square",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "12:00",
-        title: "Castle Square / Plac Zamkowy",
-        description: "Įėjimas į senamiestį. Čia prasideda klasikinė Varšuva.",
-        tags: ["must see", "old town"],
-        map: "https://www.google.com/maps/search/?api=1&query=Castle+Square+Warsaw",
-        must: true
+        id:"d2-royal-castle", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"11:45–13:00", title:"Karališkoji pilis (Zamek Królewski)",
+        description:"Pilis, kurią naciai susprogdino 1944 m., o lenkai atstatė akmuo po akmens pagal archyvinius paveikslus — tai pats galingiausias senamiesčio simbolis. Viduje: puošnios sales, Canaletto kolekcija, Lenkijos karaliaus istorija. Bilietai — pirkti iš anksto.",
+        tags:["museum","must see","old town"], map:"https://www.google.com/maps/search/?api=1&query=Royal+Castle+Warsaw", must:true
       },
       {
-        id: "d2-royal-castle",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "12:20",
-        title: "Royal Castle",
-        description: "Jei norisi vidaus — užsukti. Jei ne, pakanka aikštės ir išorės.",
-        tags: ["museum", "optional"],
-        map: "https://www.google.com/maps/search/?api=1&query=Royal+Castle+Warsaw",
-        must: false
+        id:"d2-old-town", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"13:00–13:40", title:"Senamiesčio turgaus aikštė (Rynek Starego Miasta)",
+        description:"Senamiesčio širdis — spalvingos fasadų eilės, atstatytos pagal XVII a. paveikslus. UNESCO paveldas. Miestas buvo 85% sugriauto, o lenkai jį restauravo pagal meno kūrinius. Puiki vieta kavai ir nuotraukoms.",
+        tags:["must see","old town"], map:"https://www.google.com/maps/search/?api=1&query=Old+Town+Market+Square+Warsaw", must:true
       },
       {
-        id: "d2-old-town",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "13:00",
-        title: "Old Town Market Square",
-        description: "Pagrindinė senamiesčio vieta. Pasivaikščioti, nuotraukos, kava arba pietūs.",
-        tags: ["must see", "old town"],
-        map: "https://www.google.com/maps/search/?api=1&query=Old+Town+Market+Square+Warsaw",
-        must: true
+        id:"d2-lunch", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"13:40–14:20", title:"Pietūs senamiestyje",
+        description:"Daug pasirinkimų senamiesčio aikštėje ir šalia Barbakano. Rekomenduojama: tradicinė lenkiška virtuvė — żurek (rūgštynių sriuba), pierogi arba bigos.",
+        tags:["food","old town"], map:"https://www.google.com/maps/search/?api=1&query=restaurants+Old+Town+Warsaw", must:false, food:true
       },
       {
-        id: "d2-barbican",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "14:00",
-        title: "Warsaw Barbican",
-        description: "Trumpas sustojimas prie miesto sienų. Logiška po senamiesčio aikštės.",
-        tags: ["old town", "quick stop"],
-        map: "https://www.google.com/maps/search/?api=1&query=Warsaw+Barbican",
-        must: false
+        id:"d2-barbican", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"14:20", title:"Barbakanas — miesto sienos",
+        description:"Pakeliui iš senamiesčio: 15 min. sustojimas prie XV a. gynybinių sienų. Fotogeniškas, geras tarpinis taškas prieš muziejus.",
+        tags:["old town","quick stop"], map:"https://www.google.com/maps/search/?api=1&query=Warsaw+Barbican", must:false
       },
       {
-        id: "d2-polin",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "15:30",
-        title: "POLIN Museum arba Warsaw Uprising Museum",
-        description: "Rinkitės vieną, ne abu. POLIN — gilesnė istorija, Uprising — stipresnė karo/miesto atstatymo tema.",
-        tags: ["museum", "choose one", "must see"],
-        map: "https://www.google.com/maps/search/?api=1&query=POLIN+Museum+Warsaw",
-        altMap: "https://www.google.com/maps/search/?api=1&query=Warsaw+Uprising+Museum",
-        must: true
+        id:"d2-uprising", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"15:00–17:00", title:"Varšuvos sukilimo muziejus",
+        description:"Vienas stipriausių karo muziejų Europoje. 1944 m. sukilimo istorija — pergyventa iš vidaus per garsus, atkurtas erdves ir liudijimus. Skirkite 1,5–2 val. Bilietai — iš anksto internetu.",
+        tags:["museum","must see"], map:"https://www.google.com/maps/search/?api=1&query=Warsaw+Uprising+Museum", must:true
       },
       {
-        id: "d2-vistula",
-        day: "day-2",
-        dayTitle: "Diena 2 — Pilna Varšuvos diena",
-        dayDescription: "Tikslas: vienintelę pilną dieną paimti svarbiausią Varšuvos maršrutą be blaškymosi.",
-        time: "19:00",
-        title: "Vistula Boulevards vakare",
-        description: "Jei oras geras — upės krantinė yra geras vakaro uždarymas.",
-        tags: ["evening", "walk"],
-        map: "https://www.google.com/maps/search/?api=1&query=Vistula+Boulevards+Warsaw",
-        must: false
+        id:"d2-copernicus", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"17:30–19:30", title:"Koperniko mokslo centras",
+        description:"Interaktyvus mokslo muziejus ant Vislos kranto — eksperimentai, instaliacija, planetariumas. Visiškai kitoks formatas nei Sukilimo muziejus. Tinka po sunkios istorijos — atsigaivina ir įkrauna. Bilietai — iš anksto.",
+        tags:["museum","must see"], map:"https://www.google.com/maps/search/?api=1&query=Copernicus+Science+Centre+Warsaw", must:true
+      },
+      {
+        id:"d2-vistula", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"19:30–20:30", title:"Vislos bulvarai vakare",
+        description:"Tiesiai prie Koperniko centro. Upės pakrantė vakare — gyva, daug varšuviečių. Geras dienos uždarymas prieš vakarienę.",
+        tags:["evening","walk"], map:"https://www.google.com/maps/search/?api=1&query=Vistula+Boulevards+Warsaw", must:false
+      },
+      {
+        id:"d2-dinner", day:"day-2",
+        dayTitle:"Diena 2 — Pilna Varšuvos diena",
+        dayDescription:"09:00–22:00 · Karališkoji gatvė → Senamiestis → Karališkoji pilis → 2 muziejai → Visla",
+        time:"20:30–22:00", title:"Vakarienė — Elektrownia Powiśle",
+        description:"Modernus maisto ir gėrimų kompleksas senosiose elektrinės patalpose, netoli Koperniko centro. Puikus finalas po intensyvios dienos. Alternatyva: Nowy Świat restoranai.",
+        tags:["food","evening"], map:"https://www.google.com/maps/search/?api=1&query=Elektrownia+Powisle+Warsaw",
+        altMap:"https://www.google.com/maps/search/?api=1&query=Nowy+Swiat+restaurants+Warsaw", must:false, food:true
       },
 
-      // DAY 3
+      // ── DIENA 3 ────────────────────────────────────────────────
       {
-        id: "d3-lazienki",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Tik jei liktų papildoma diena",
-        title: "Łazienki Królewskie parkas",
-        description: "Šito realiai neplanuoti 3 dienos rytą, nes 11:30 išvykimas. Palikti kaip alternatyvą, jei programa pasikeistų.",
-        tags: ["optional", "park"],
-        map: "https://www.google.com/maps/search/?api=1&query=Lazienki+Krolewskie+Warsaw",
-        must: false
+        id:"d3-breakfast-hotel", day:"day-3",
+        dayTitle:"Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription:"Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time:"07:30–08:15", title:"Pusryčiai viešbutyje",
+        description:"Pavalgyti be skubėjimo. Daiktus geriausia sudėti dar prieš pusryčius — po baseino nebereikės skubėti.",
+        tags:["hotel","food","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:true, food:true
       },
       {
-        id: "d3-palace-isle",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Tik jei liktų papildoma diena",
-        title: "Palace on the Isle",
-        description: "Palikti kaip papildomą opciją, ne pagrindinį 3 dienos planą.",
-        tags: ["optional", "park"],
-        map: "https://www.google.com/maps/search/?api=1&query=Palace+on+the+Isle+Warsaw",
-        must: false
+        id:"d3-rooftop-pool", day:"day-3",
+        dayTitle:"Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription:"Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time:"08:30–10:30", title:"2 val. baseinas ant stogo",
+        description:"Pagrindinis 3 dienos rytas. Panorama į Varšuvą iš viršaus. Po baseino palikti bent 45–60 min. persirengimui ir nusileidimui.",
+        tags:["hotel","pool","must see"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa+pool", must:true
       },
       {
-        id: "d3-ujazdow",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Tik jei liktų papildoma diena",
-        title: "Ujazdów / ambasadų rajonas",
-        description: "Netelpa į realų 3 dienos rytą, bet verta turėti kaip atsarginį variantą.",
-        tags: ["walk", "optional"],
-        map: "https://www.google.com/maps/search/?api=1&query=Ujazdow+Warsaw",
-        must: false
+        id:"d3-checkout", day:"day-3",
+        dayTitle:"Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription:"Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time:"10:30–11:15", title:"Check-out ir pasiruošimas išvykimui",
+        description:"Persirengti, susidėti šlapius daiktus atskirai, pasiimti dokumentus, telefoną, powerbanką ir nusileisti prie autobuso.",
+        tags:["hotel","return","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:true
       },
       {
-        id: "d3-hala",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Tik jei liktų papildoma diena",
-        title: "Hala Koszyki pietums",
-        description: "Patogi vieta, kai draugams sunku susitarti dėl maisto — daug pasirinkimų vienoje vietoje.",
-        tags: ["food", "chill"],
-        map: "https://www.google.com/maps/search/?api=1&query=Hala+Koszyki+Warsaw",
-        must: false,
-        food: true
+        id:"return-hotel", day:"day-3",
+        dayTitle:"Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription:"Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time:"11:30", title:"Išvykimas iš Varšuvos viešbučio",
+        description:"Autobusas išvyksta nuo viešbučio 11:30. Pasidaryti check-out ir susidėti daiktus iki šio laiko.",
+        tags:["return","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:true
       },
       {
-        id: "d3-copernicus",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Tik jei liktų papildoma diena",
-        title: "Copernicus Science Centre arba National Museum",
-        description: "Jei norisi vidaus veiklos. Jei oras geras, galima praleisti ir eiti prie upės.",
-        tags: ["optional", "museum"],
-        map: "https://www.google.com/maps/search/?api=1&query=Copernicus+Science+Centre+Warsaw",
-        altMap: "https://www.google.com/maps/search/?api=1&query=National+Museum+in+Warsaw",
-        must: false
+        id:"return-food-stop", day:"day-3",
+        dayTitle:"Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription:"Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time:"Grįžtant", title:"Sustojimas greito maisto restorane",
+        description:"Grįžtant iš Lenkijos į Lietuvą numatytas sustojimas greito maisto restorane.",
+        tags:["return","food"], map:"", must:false, food:true
       },
       {
-        id: "d3-powisle",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Tik jei liktų papildoma diena",
-        title: "Elektrownia Powiśle / paskutinis vakaras",
-        description: "Maistas, gėrimai, chill. Geras finalas prieš grįžimą į viešbutį.",
-        tags: ["food", "evening"],
-        map: "https://www.google.com/maps/search/?api=1&query=Elektrownia+Powisle+Warsaw",
-        must: false,
-        food: true
-      },
-
-      {
-        id: "d3-breakfast-hotel",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "07:30–08:15",
-        title: "Pusryčiai viešbutyje",
-        description: "Pavalgyti be skubėjimo, po pusryčių pasiruošti baseinui ir check-out. Daiktus geriausia susidėti dar prieš pusryčius.",
-        tags: ["hotel", "food", "important"],
-        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
-        must: true,
-        food: true
-      },
-      {
-        id: "d3-rooftop-pool",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "08:30–10:30",
-        title: "2 val. baseinas ant stogo",
-        description: "Pagrindinis 3 dienos rytas. Po baseino palikti bent 45–60 min. persirengimui, daiktams ir nusileidimui į išvykimo vietą.",
-        tags: ["hotel", "pool", "must see"],
-        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa+pool",
-        must: true
-      },
-      {
-        id: "d3-checkout",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "10:30–11:15",
-        title: "Check-out ir pasiruošimas išvykimui",
-        description: "Persirengti, susidėti šlapius daiktus atskirai, pasiimti dokumentus, telefoną, powerbanką ir nusileisti prie autobuso.",
-        tags: ["hotel", "return", "important"],
-        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
-        must: true
-      },
-      {
-        id: "return-hotel",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "11:30",
-        title: "Išvykimas iš Varšuvos viešbučio",
-        description: "Autobusas išvyksta nuo viešbučio 11:30. Prieš tai pasidaryti check-out ir susidėti daiktus.",
-        tags: ["return", "important"],
-        map: "https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa",
-        must: true
-      },
-      {
-        id: "return-food-stop",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "Grįžtant",
-        title: "Sustojimas greito maisto restorane",
-        description: "Grįžtant iš Lenkijos į Lietuvą numatytas sustojimas greito maisto restorane.",
-        tags: ["return", "food"],
-        map: "",
-        must: false,
-        food: true
-      },
-      {
-        id: "return-lithuania",
-        day: "day-3",
-        dayTitle: "Diena 3 — Pusryčiai, baseinas ir išvykimas",
-        dayDescription: "Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
-        time: "18:30–20:00",
-        title: "Grįžimas į Lietuvą",
-        description: "Preliminariai: Marijampolė apie 18:30, Kaunas apie 19:00, Vilnius apie 20:00.",
-        tags: ["return", "travel"],
-        map: "https://www.google.com/maps/search/?api=1&query=Vilnius",
-        must: false
-      },
-
-      // PREP
-      {
-        id: "prep-docs",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "Prieš išvykstant",
-        title: "Dokumentai, bilietai, rezervacija",
-        description: "Turėti bilietą, asmens dokumentą, viešbučio rezervaciją, tikslų išvykimo laiką iš informacinio laiško ir viešbučio adresą telefone/offline.",
-        tags: ["important", "prep"],
-        map: "",
-        must: true
-      },
-      {
-        id: "prep-offline",
-        day: "day-1",
-        dayTitle: "Diena 1 — Kelionė + pirmas vakaras",
-        dayDescription: "Tikslas: laiku išvykti, ramiai atvykti, įsikurti ir vakare lengvai pasivaikščioti.",
-        time: "Prieš išvykstant",
-        title: "Atsisiųsti offline Google Maps",
-        description: "Atsisiųsti Varšuvos centro zoną, kad planas veiktų net su prastu internetu.",
-        tags: ["prep"],
-        map: "https://www.google.com/maps/search/?api=1&query=Warsaw+city+centre",
-        must: false
+        id:"return-lithuania", day:"day-3",
+        dayTitle:"Diena 3 — Pusryčiai, baseinas ir išvykimas",
+        dayDescription:"Tikslas: ramus rytas viešbutyje, 2 val. baseinas ant stogo ir išvykimas 11:30.",
+        time:"18:30–20:00", title:"Grįžimas į Lietuvą",
+        description:"Preliminariai: Marijampolė apie 18:30, Kaunas apie 19:00, Vilnius apie 20:00.",
+        tags:["return","travel"], map:"https://www.google.com/maps/search/?api=1&query=Vilnius", must:false
       }
     ];
 
@@ -995,21 +406,13 @@
     const ring = document.getElementById("ring");
     const percent = document.getElementById("percent");
     const progressText = document.getElementById("progressText");
-
-    const STORAGE_KEY = "warsawTripVisitedV1";
+    const STORAGE_KEY = "warsawTripVisitedV2";
     let activeFilter = "all";
 
     function getVisited() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      } catch {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; }
     }
-
-    function setVisited(visited) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(visited));
-    }
+    function setVisited(v) { localStorage.setItem(STORAGE_KEY, JSON.stringify(v)); }
 
     function tagClass(tag) {
       if (tag === "must see" || tag === "important") return "must";
@@ -1026,48 +429,29 @@
 
     function render() {
       const visited = getVisited();
-      const visiblePlaces = places.filter(place => shouldShow(place, visited));
-      const days = [...new Map(visiblePlaces.map(place => [place.day, {
-        id: place.day,
-        title: place.dayTitle,
-        description: place.dayDescription
-      }])).values()];
-
+      const visiblePlaces = places.filter(p => shouldShow(p, visited));
+      const days = [...new Map(visiblePlaces.map(p => [p.day, { id:p.day, title:p.dayTitle, description:p.dayDescription }])).values()];
       app.innerHTML = "";
-
       days.forEach(day => {
-        const dayPlaces = visiblePlaces.filter(place => place.day === day.id);
-        const doneInDay = dayPlaces.filter(place => visited[place.id]).length;
-
+        const dayPlaces = visiblePlaces.filter(p => p.day === day.id);
+        const doneInDay = dayPlaces.filter(p => visited[p.id]).length;
         const section = document.createElement("section");
-        section.className = "day";
-        section.id = day.id;
-
+        section.className = "day"; section.id = day.id;
         section.innerHTML = `
           <div class="day-head">
-            <div>
-              <h2>${day.title}</h2>
-              <p class="day-desc">${day.description}</p>
-            </div>
+            <div><h2>${day.title}</h2><p class="day-desc">${day.description}</p></div>
             <div class="day-count">${doneInDay}/${dayPlaces.length} done</div>
           </div>
-          <div class="timeline"></div>
-        `;
-
+          <div class="timeline"></div>`;
         const timeline = section.querySelector(".timeline");
-
         dayPlaces.forEach(place => {
           const isDone = Boolean(visited[place.id]);
           const card = document.createElement("article");
           card.className = `place ${place.food ? "food" : ""} ${isDone ? "done" : ""}`;
-
-          const tags = place.tags.map(tag => `<span class="tag ${tagClass(tag)}">${tag}</span>`).join("");
-
-          const mapButtons = `
+          const tags = place.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join("");
+          const mapBtns = `
             ${place.map ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.map}">Žemėlapis ↗</a>` : ""}
-            ${place.altMap ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.altMap}">Alternatyva ↗</a>` : ""}
-          `;
-
+            ${place.altMap ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.altMap}">Alternatyva ↗</a>` : ""}`;
           card.innerHTML = `
             <div class="place-top">
               <input class="check" type="checkbox" ${isDone ? "checked" : ""} aria-label="Pažymėti kaip aplankyta" />
@@ -1076,66 +460,49 @@
                 <h3>${place.title}</h3>
                 <p class="desc">${place.description}</p>
                 <div class="tags">${tags}</div>
-                <div class="place-actions">${mapButtons}</div>
+                <div class="place-actions">${mapBtns}</div>
               </div>
-            </div>
-          `;
-
-          card.querySelector(".check").addEventListener("change", event => {
+            </div>`;
+          card.querySelector(".check").addEventListener("change", e => {
             const next = getVisited();
-            next[place.id] = event.target.checked;
-            setVisited(next);
-            render();
+            next[place.id] = e.target.checked;
+            setVisited(next); render();
           });
-
           timeline.appendChild(card);
         });
-
         app.appendChild(section);
       });
-
       updateProgress();
     }
 
     function updateProgress() {
       const visited = getVisited();
-      const done = places.filter(place => visited[place.id]).length;
+      const done = places.filter(p => visited[p.id]).length;
       const total = places.length;
       const pct = total ? Math.round((done / total) * 100) : 0;
-
       ring.style.setProperty("--progress", `${pct}%`);
       percent.textContent = `${pct}%`;
-      progressText.textContent = done === 0
-        ? "Dar niekas nepažymėta."
-        : `Pažymėta ${done} iš ${total} punktų.`;
+      progressText.textContent = done === 0 ? "Dar niekas nepažymėta." : `Pažymėta ${done} iš ${total} punktų.`;
     }
 
-    tabs.addEventListener("click", event => {
-      const button = event.target.closest(".tab");
-      if (!button) return;
-
-      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-      button.classList.add("active");
-      activeFilter = button.dataset.filter;
+    tabs.addEventListener("click", e => {
+      const btn = e.target.closest(".tab");
+      if (!btn) return;
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      btn.classList.add("active");
+      activeFilter = btn.dataset.filter;
       render();
     });
 
     document.getElementById("reset").addEventListener("click", () => {
-      const ok = confirm("Ištrinti visus pažymėjimus?");
-      if (!ok) return;
-      localStorage.removeItem(STORAGE_KEY);
-      render();
+      if (!confirm("Ištrinti visus pažymėjimus?")) return;
+      localStorage.removeItem(STORAGE_KEY); render();
     });
-
     document.getElementById("printPlan").addEventListener("click", () => window.print());
-
     document.getElementById("markTravel").addEventListener("click", () => {
       const visited = getVisited();
-      places
-        .filter(place => place.tags.includes("travel") || place.tags.includes("prep"))
-        .forEach(place => visited[place.id] = true);
-      setVisited(visited);
-      render();
+      places.filter(p => p.tags.includes("travel") || p.tags.includes("prep")).forEach(p => visited[p.id] = true);
+      setVisited(visited); render();
     });
 
     render();
