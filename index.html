@@ -35,6 +35,9 @@
     }
     a { color: inherit; }
     button, input { font: inherit; }
+    button, a, summary, input { touch-action: manipulation; }
+    button, .link-btn, .deep-dive summary { -webkit-tap-highlight-color: rgba(138,63,34,0.16); }
+    body { overflow-x: hidden; }
     .shell { width: min(980px, calc(100% - 28px)); margin: 0 auto; }
     .hero { padding: 28px 0 18px; }
     .hero-card {
@@ -58,8 +61,9 @@
     .meta-label { display: block; margin-bottom: 4px; color: rgba(255,250,241,0.62); font-size: 12px; }
     .meta-value { display: block; font-weight: 800; font-size: 15px; }
     .sticky { position: sticky; top: 0; z-index: 10; padding: 10px 0; backdrop-filter: blur(18px); background: rgba(246,241,232,0.82); border-bottom: 1px solid var(--line); }
-    .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
-    .tab { border: 1px solid var(--line); background: rgba(255,250,241,0.72); color: var(--ink); padding: 10px 13px; border-radius: 999px; white-space: nowrap; cursor: pointer; font-weight: 700; position: relative; z-index: 1; }
+    .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-snap-type: x proximity; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { flex: 0 0 auto; min-height: 44px; border: 1px solid var(--line); background: rgba(255,250,241,0.72); color: var(--ink); padding: 10px 14px; border-radius: 999px; white-space: nowrap; cursor: pointer; font-weight: 800; position: relative; z-index: 1; scroll-snap-align: start; }
     .tab.active { background: var(--ink); color: var(--card); border-color: var(--ink); }
     .summary-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; margin: 16px 0; }
     .panel { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,250,241,0.75); box-shadow: var(--shadow); padding: 18px; }
@@ -69,7 +73,7 @@
     .progress-title { margin: 0; font-size: 20px; letter-spacing: -0.03em; }
     .progress-sub { margin: 4px 0 0; color: var(--muted); }
     .quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .action { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 9px 12px; cursor: pointer; font-weight: 700; position: relative; z-index: 1; }
+    .action { min-height: 44px; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 10px 14px; cursor: pointer; font-weight: 800; position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; text-align: center; line-height: 1.15; }
     .action.danger { color: var(--danger); }
     .note-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
     .note-list strong { color: var(--ink); }
@@ -82,10 +86,13 @@
     .place { position: relative; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); box-shadow: 0 10px 28px rgba(25,23,20,0.055); padding: 16px; transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease; }
     .place:hover { transform: translateY(-2px); }
     .place.done { opacity: 0.62; border-color: rgba(107,127,93,0.35); }
-    .place-top { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
-    .check { appearance: none; width: 28px; height: 28px; border: 2px solid rgba(25,23,20,0.22); border-radius: 9px; background: #fff; cursor: pointer; display: grid; place-items: center; margin-top: 2px; }
+    .place-top { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+    .place-main { min-width: 0; }
+    .check-wrap { min-width: 44px; min-height: 44px; display: grid; place-items: start center; cursor: pointer; }
+    .check { appearance: none; width: 34px; height: 34px; border: 2px solid rgba(25,23,20,0.22); border-radius: 11px; background: #fff; cursor: pointer; display: grid; place-items: center; margin: 0; }
     .check:checked { border-color: var(--done); background: var(--done); }
-    .check:checked::after { content: "✓"; color: white; font-weight: 900; font-size: 18px; transform: translateY(-1px); }
+    .check:checked::after { content: "✓"; color: white; font-weight: 900; font-size: 20px; transform: translateY(-1px); }
+    .check:focus-visible, .tab:focus-visible, .action:focus-visible, .link-btn:focus-visible, .deep-dive summary:focus-visible { outline: 3px solid rgba(138,63,34,0.35); outline-offset: 3px; }
     .time { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 900; font-size: 13px; letter-spacing: 0.02em; }
     .place h3 { margin: 4px 0 5px; font-size: 20px; letter-spacing: -0.035em; line-height: 1.12; }
     .place.done h3 { text-decoration: line-through; }
@@ -105,26 +112,55 @@
     .route-list li { margin: 7px 0; }
     .route-list strong { color: var(--ink); }
     .place-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
-    .link-btn { display: inline-flex; align-items: center; gap: 7px; text-decoration: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 10px; font-size: 13px; font-weight: 700; position: relative; z-index: 1; }
+    .link-btn { min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; text-decoration: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 9px 12px; font-size: 13px; font-weight: 800; position: relative; z-index: 1; text-align: center; line-height: 1.15; }
     .food { border-style: dashed; background: rgba(255,250,241,0.58); }
     .footer { padding: 22px 0 34px; color: var(--muted); font-size: 13px; }
 
     .deep-dive { margin-top: 12px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,0.52); overflow: hidden; }
-    .deep-dive summary { cursor: pointer; padding: 11px 13px; font-weight: 850; color: var(--ink); list-style: none; }
+    .deep-dive summary { min-height: 44px; cursor: pointer; padding: 12px 14px; font-weight: 850; color: var(--ink); list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .deep-dive summary::-webkit-details-marker { display: none; }
-    .deep-dive summary::after { content: "+"; float: right; color: var(--accent); font-weight: 900; }
+    .deep-dive summary::after { content: "+"; color: var(--accent); font-weight: 900; font-size: 18px; line-height: 1; }
     .deep-dive[open] summary::after { content: "–"; }
     .deep-body { padding: 0 13px 13px; color: var(--muted); font-size: 14px; display: grid; gap: 10px; }
     .deep-body p { margin: 0; }
     .deep-body strong { color: var(--ink); }
     .site-btn { background: var(--ink); color: var(--card); border-color: var(--ink); }
+    .place-actions:empty { display: none; }
+    #tram-route, .day { scroll-margin-top: 88px; }
 
     @media (max-width: 760px) {
+      .shell { width: min(100% - 22px, 980px); }
+      .hero { padding-top: 16px; }
       .hero-card { padding: 22px; border-radius: 24px; }
-      .hero-meta { grid-template-columns: repeat(2,1fr); }
+      .hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .summary-grid { grid-template-columns: 1fr; }
+      .progress-wrap { align-items: flex-start; }
+      .quick-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+      .quick-actions .action { width: 100%; }
       .day-head { align-items: start; flex-direction: column; }
       .day-count { white-space: normal; }
+      .place { padding: 14px; }
+      .place:hover { transform: none; }
+      .place-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .link-btn { width: 100%; }
+    }
+    @media (max-width: 520px) {
+      .shell { width: min(100% - 18px, 980px); }
+      h1 { font-size: clamp(32px, 12vw, 48px); }
+      .hero-meta { grid-template-columns: 1fr; }
+      .progress-wrap { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; }
+      .ring { width: 72px; height: 72px; }
+      .ring-inner { width: 54px; height: 54px; }
+      .quick-actions { grid-column: 1 / -1; grid-template-columns: 1fr; }
+      .tabs { gap: 7px; }
+      .tab { min-height: 42px; padding: 9px 12px; font-size: 14px; }
+      .place-top { grid-template-columns: 40px minmax(0, 1fr); gap: 10px; }
+      .check-wrap { min-width: 40px; min-height: 40px; }
+      .check { width: 32px; height: 32px; border-radius: 10px; }
+      .place h3 { font-size: 19px; }
+      .desc, .deep-body { font-size: 14px; }
+      .insight { font-size: 13px; }
+      .place-actions { grid-template-columns: 1fr; }
     }
     @media print {
       body { background: white; }
@@ -140,8 +176,8 @@
         <p class="eyebrow">Kelionės checklist · Varšuva</p>
         <h1>3 dienos Varšuvoje su draugu</h1>
         <p class="hero-text">
-          Planas nuo InterContinental Warszawa: pirmą dieną atvykimas 15:30, check-in, baseinas su persirengimo rezervu ir vakaras prie Stalino piršto;
-          antrą — maršrutas be važinėjimo pirmyn-atgal, su realiais perėjimo ir transporto rezervais.
+          Planas nuo InterContinental Warszawa: pirmą dieną baseinas viešbutyje ir vakaras prie Stalino piršto,
+          antrą — optimizuotas maršrutas be blaškymosi: Sukilimo muziejus → senamiestis → Karališkasis traktas → Kopernikas → Visla, trečią — baseinas ant stogo ir išvykimas.
         </p>
         <div class="hero-meta">
           <div class="meta-tile"><span class="meta-label">Išvykimas</span><span class="meta-value">Vilnius · 07:00/07:30</span></div>
@@ -177,6 +213,8 @@
             <div class="quick-actions">
               <button class="action" id="markTravel">Pažymėti kelionės punktus</button>
               <button class="action" id="showRoute">Tramvajų maršrutas</button>
+              <button class="action" id="expandDetails">Išskleisti aprašymus</button>
+              <button class="action" id="collapseDetails">Suskleisti aprašymus</button>
               <button class="action" id="printPlan">Spausdinti / PDF</button>
               <button class="action danger" id="reset">Reset</button>
             </div>
@@ -186,7 +224,7 @@
       <aside class="panel">
         <ul class="note-list">
           <li><strong>1 diena:</strong> atvykimas į viešbutį 15:30, check-in, baseinas, 30–40 min. persirengimo rezervas, tada Stalino pirštas + vakarienė.</li>
-          <li><strong>2 diena:</strong> 09:00–21:00 — Sukilimo muziejus → Senamiestis → Karališkoji pilis → Karališkasis traktas → Kopernikas → Visla. Be važinėjimo pirmyn-atgal.</li>
+          <li><strong>2 diena:</strong> 09:00–22:00 — Sukilimo muziejus → Senamiestis → Karališkoji pilis → Karališkasis traktas → Kopernikas → Visla. Be važinėjimo pirmyn-atgal.</li>
           <li><strong>3 diena:</strong> pusryčiai, check-out ir išvykimas 11:30. Kelionė namo.</li>
           <li><strong>Muziejų bilietai:</strong> Karališkoji pilis, Sukilimo ir Koperniko — rekomenduojama pirkti iš anksto internetu.</li>
           <li><strong>Laikų logika:</strong> tarp objektų palikti 15–40 min. buferius. Čia planas jau skaičiuoja ne teleportaciją, o liftus, persirengimą, ėjimą iki stotelių ir laukimą.</li>
@@ -687,18 +725,20 @@
             ${place.officialUrl ? `<a class="link-btn site-btn" target="_blank" rel="noreferrer" href="${place.officialUrl}">${place.officialLabel || "Oficiali svetainė"} ↗</a>` : ""}
             ${place.ticketUrl ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.ticketUrl}">${place.ticketLabel || "Bilietai"} ↗</a>` : ""}
             ${place.map ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.map}">Žemėlapis ↗</a>` : ""}
-            ${place.altMap ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.altMap}">Alternatyva ↗</a>` : ""}`;
+            ${place.altMap ? `<a class="link-btn" target="_blank" rel="noreferrer" href="${place.altMap}">Alternatyva ↗</a>` : ""}`.trim();
           card.innerHTML = `
             <div class="place-top">
-              <input class="check" type="checkbox" ${isDone ? "checked" : ""} aria-label="Pažymėti kaip aplankyta" />
-              <div>
+              <label class="check-wrap" aria-label="Pažymėti punktą kaip atliktą">
+                <input class="check" type="checkbox" ${isDone ? "checked" : ""} aria-label="Pažymėti kaip aplankyta" />
+              </label>
+              <div class="place-main">
                 <div class="time">${place.time}</div>
                 <h3>${place.title}</h3>
                 <p class="desc">${place.description}</p>
                 <div class="insight-grid">${insightBlocks}</div>
                 ${deepDiveHtml}
                 <div class="tags">${tags}</div>
-                <div class="place-actions">${mapBtns}</div>
+                ${mapBtns ? `<div class="place-actions">${mapBtns}</div>` : ""}
               </div>
             </div>`;
           card.querySelector(".check").addEventListener("change", e => {
@@ -728,6 +768,7 @@
       if (!btn) return;
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
       btn.classList.add("active");
+      btn.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
       activeFilter = btn.dataset.filter;
       render();
     });
@@ -737,7 +778,9 @@
       localStorage.removeItem(STORAGE_KEY); render();
     });
     document.getElementById("printPlan").addEventListener("click", () => window.print());
-    document.getElementById("showRoute").addEventListener("click", () => document.getElementById("tram-route").scrollIntoView({ behavior: "smooth" }));
+    document.getElementById("showRoute").addEventListener("click", () => document.getElementById("tram-route").scrollIntoView({ behavior: "smooth", block: "start" }));
+    document.getElementById("expandDetails").addEventListener("click", () => document.querySelectorAll(".deep-dive").forEach(item => item.open = true));
+    document.getElementById("collapseDetails").addEventListener("click", () => document.querySelectorAll(".deep-dive").forEach(item => item.open = false));
     document.getElementById("markTravel").addEventListener("click", () => {
       const visited = getVisited();
       places.filter(p => p.tags.includes("travel") || p.tags.includes("prep")).forEach(p => visited[p.id] = true);
