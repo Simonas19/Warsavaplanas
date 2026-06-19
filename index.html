@@ -140,12 +140,12 @@
         <p class="eyebrow">Kelionės checklist · Varšuva</p>
         <h1>3 dienos Varšuvoje su draugu</h1>
         <p class="hero-text">
-          Planas nuo InterContinental Warszawa: pirmą dieną baseinas viešbutyje ir vakaras prie Stalino piršto,
-          antrą — optimizuotas maršrutas be blaškymosi: Sukilimo muziejus → senamiestis → Karališkasis traktas → Kopernikas → Visla, trečią — baseinas ant stogo ir išvykimas.
+          Planas nuo InterContinental Warszawa: pirmą dieną atvykimas 15:30, check-in, baseinas su persirengimo rezervu ir vakaras prie Stalino piršto;
+          antrą — maršrutas be važinėjimo pirmyn-atgal, su realiais perėjimo ir transporto rezervais.
         </p>
         <div class="hero-meta">
           <div class="meta-tile"><span class="meta-label">Išvykimas</span><span class="meta-value">Vilnius · 07:00/07:30</span></div>
-          <div class="meta-tile"><span class="meta-label">1 diena</span><span class="meta-value">Baseinas + Stalino pirštas</span></div>
+          <div class="meta-tile"><span class="meta-label">1 diena</span><span class="meta-value">15:30 viešbutis + baseinas</span></div>
           <div class="meta-tile"><span class="meta-label">2 diena</span><span class="meta-value">Optimalus maršrutas be grįžinėjimo</span></div>
           <div class="meta-tile"><span class="meta-label">3 diena</span><span class="meta-value">Check-out + 11:30 išvykimas</span></div>
         </div>
@@ -185,10 +185,11 @@
       </div>
       <aside class="panel">
         <ul class="note-list">
-          <li><strong>1 diena:</strong> atvykimas ~16:30–17:00, baseinas viešbutyje, vakaras — Stalino pirštas + vakarienė.</li>
-          <li><strong>2 diena:</strong> 09:00–22:00 — Sukilimo muziejus → Senamiestis → Karališkoji pilis → Karališkasis traktas → Kopernikas → Visla. Be važinėjimo pirmyn-atgal.</li>
+          <li><strong>1 diena:</strong> atvykimas į viešbutį 15:30, check-in, baseinas, 30–40 min. persirengimo rezervas, tada Stalino pirštas + vakarienė.</li>
+          <li><strong>2 diena:</strong> 09:00–21:00 — Sukilimo muziejus → Senamiestis → Karališkoji pilis → Karališkasis traktas → Kopernikas → Visla. Be važinėjimo pirmyn-atgal.</li>
           <li><strong>3 diena:</strong> pusryčiai, check-out ir išvykimas 11:30. Kelionė namo.</li>
           <li><strong>Muziejų bilietai:</strong> Karališkoji pilis, Sukilimo ir Koperniko — rekomenduojama pirkti iš anksto internetu.</li>
+          <li><strong>Laikų logika:</strong> tarp objektų palikti 15–40 min. buferius. Čia planas jau skaičiuoja ne teleportaciją, o liftus, persirengimą, ėjimą iki stotelių ir laukimą.</li>
           <li><strong>Transportas:</strong> pagrindui naudoti tramvajus + trumpus ėjimus. Prieš lipant patikrinti WTP/Jakdojade, nes trasos gali keistis.</li>
         </ul>
       </aside>
@@ -273,32 +274,46 @@
         id:"d1-hotel", day:"day-1",
         dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
         dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
-        time:"16:30–17:00", title:"Check-in: InterContinental Warszawa",
-        description:"Palikti daiktus, maudymosi kostiumą paimti atskirai — iš karto po įsiregistravimo einame į viešbučio baseiną.",
+        time:"15:30–16:00", title:"Check-in: InterContinental Warszawa",
+        description:"Realistiškas pirmas blokas: atvykstate 15:30, įsiregistruojate, paliekate daiktus, išsitraukiate maudymosi aprangą ir nebandote iš karto bėgti į miestą.",
+        mustKnow:"Viešbučio oficialus check-in prasideda nuo 15:00, todėl 15:30 yra logiškas planavimo laikas, bet vis tiek pasilikite 20–30 min. registracijai ir liftams.",
         tags:["near hotel","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:true
       },
       {
         id:"d1-pool", day:"day-1",
         dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
         dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
-        time:"17:15–18:30", title:"Viešbučio baseinas",
-        description:"Atsipalaiduoti po ilgos kelionės prieš vakarinį pasivaikščiojimą. Po baseino persirengti ir eiti į miestą.",
+        time:"16:15–17:20", title:"Viešbučio baseinas",
+        description:"Baseinui skiriama apie valanda. Tai pakankamai, kad atsipalaiduotumėte po kelionės, bet nepertemptumėte pirmo vakaro grafiko.",
+        mustKnow:"Po baseino negalima planuoti kito objekto iš karto. Reikia dušo, persirengimo, daiktų susidėjimo, lifto ir išėjimo iš viešbučio rezervo.",
         tags:["hotel","pool","important"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa+pool", must:true
+      },
+      {
+        id:"d1-pool-transition", day:"day-1",
+        dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
+        dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
+        time:"17:20–18:05", title:"Dušas, persirengimas ir ėjimas iki PKiN",
+        description:"Čia buvo trūkstamas realybės blokas. Išlipti iš baseino nereiškia jau būti prie Stalino piršto: reikia nusiprausti, persirengti, susidėti daiktus, nusileisti liftu ir tik tada išeiti iš viešbučio.",
+        mustKnow:"Šitas 45 min. rezervas apsaugo nuo teleportacijos grafike. Jei baseiną baigsite greičiau, tiesiog turėsite ramesnį vakarą.",
+        transit:"InterContinental → PKiN: pėsčiomis. Tramvajaus nenaudoti — per arti ir tik sugaištumėte laiką.",
+        tags:["buffer","walk","near hotel"], map:"https://www.google.com/maps/dir/?api=1&origin=InterContinental+Warszawa&destination=Palace+of+Culture+and+Science+Warsaw&travelmode=walking", must:false
       },
       {
         id:"d1-palace", day:"day-1",
         dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
         dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
-        time:"19:00", title:"Palace of Culture — „Stalino pirštas“",
-        description:"5 min. pėsčiomis nuo viešbučio. Vakare labai efektingai apšviestas. Apeiti iš išorės, nusifotografuoti. Galima kilti į apžvalgos aikštelę (30+ aukštas) — vaizdas į naktinę Varšuvą.",
+        time:"18:05–19:10", title:"Palace of Culture — „Stalino pirštas“",
+        description:"Po persirengimo išeinate iš viešbučio ir einate pėsčiomis iki PKiN. Pats ėjimas trumpas, bet realiai reikia skirti laiką nusileisti iš kambario, išeiti iš viešbučio, pereiti per centro erdves ir ramiai apsidairyti.",
+        transit:"Viešbutis → PKiN: pėsčiomis. Tramvajaus nereikia — tai per arti. Skaičiuoti ne 5 min. nuo durų iki durų, o 10–15 min. su liftais, perėjomis ir orientavimusi.",
         tags:["near hotel","must see"], map:"https://www.google.com/maps/search/?api=1&query=Palace+of+Culture+and+Science+Warsaw", must:true
       },
       {
         id:"d1-dinner", day:"day-1",
         dayTitle:"Diena 1 — Kelionė + pirmas vakaras",
         dayDescription:"Tikslas: laiku išvykti, ramiai atvykti, baseinas viešbutyje ir vakaras prie Stalino piršto.",
-        time:"19:45", title:"Vakarienė šalia Stalino piršto",
-        description:"Paprasta ir greita: „Złote Tarasy“ PC tiesiai šalia viešbučio. Arba 10 min. pėsčiomis — restoranai Nowy Świat gatvėje. Nereikia toli eiti — rytoj pilna diena.",
+        time:"19:20–20:30", title:"Vakarienė šalia Stalino piršto",
+        description:"Po PKiN nebeplanuoti tolimos vakarienės. Logiškiausia: Złote Tarasy arba artimi restoranai aplink centrą. Tikslas — pavalgyti be papildomos transporto kilpos.",
+        transit:"PKiN → Złote Tarasy / InterContinental zona: pėsčiomis. Jeigu renkatės Nowy Świat, skaičiuokite papildomas 10–15 min. į vieną pusę.",
         tags:["food","near hotel"], map:"https://www.google.com/maps/search/?api=1&query=restaurants+near+Palace+of+Culture+Warsaw", must:false, food:true
       },
 
@@ -306,18 +321,28 @@
       {
         id:"d2-breakfast", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"09:00–09:35", title:"Pusryčiai viešbutyje",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"09:00–09:45", title:"Pusryčiai viešbutyje",
         description:"Gerai pavalgyti prieš intensyvią dieną. Pasiimti vandens, powerbanką ir lengvą užkandį — po muziejų ir senamiesčio bus daug ėjimo.",
         mustKnow:"Šiandien svarbiausia ne kuo daugiau kartų važiuoti transportu, o judėti viena kryptimi. Iš viešbučio pirmiausia važiuojame į vakarinį tašką — Sukilimo muziejų.",
         transit:"Startas nuo InterContinental / Rondo ONZ / Centrum zonos. Programėlėje vesti: Muzeum Powstania Warszawskiego arba Rondo Daszyńskiego.",
         tags:["hotel","food","start"], map:"https://www.google.com/maps/search/?api=1&query=InterContinental+Warszawa", must:false, food:true
       },
       {
+        id:"d2-transfer-uprising", day:"day-2",
+        dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"09:45–10:20", title:"Pervažiavimas: viešbutis → Sukilimo muziejus",
+        description:"Pirmas dienos transporto blokas. Čia sąmoningai dedamas 35 min. rezervas: išėjimas iš viešbučio, stotelės paieška, laukimas, važiavimas ir ėjimas iki įėjimo.",
+        mustKnow:"Neplanuoti muziejaus 10:00, jei pusryčiai baigiasi 09:35–09:45. Su tramvajais realiai reikia rezervo, ypač pirmą kartą mieste.",
+        transit:"InterContinental / Rondo ONZ / Centrum → Muzeum Powstania Warszawskiego arba Rondo Daszyńskiego. Rinktis Jakdojade/WTP siūlomą variantą su mažiausiai persėdimų.",
+        tags:["transport","tram","buffer"], map:"https://www.google.com/maps/dir/?api=1&origin=InterContinental+Warszawa&destination=Warsaw+Uprising+Museum&travelmode=transit", must:false
+      },
+      {
         id:"d2-uprising", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"10:00–11:45", title:"Varšuvos sukilimo muziejus",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"10:20–12:05", title:"Varšuvos sukilimo muziejus",
         description:"Vienas stipriausių karo muziejų Europoje. 1944 m. sukilimo istorija — per garsus, atkurtas erdves, liudijimus ir miesto griūties kontekstą. Geriau eiti ryte, kol dar yra koncentracijos.",
         funFact:"Tai nėra sausas muziejus su vitrinomis. Jis sukurtas taip, kad jaustum miesto spaudimą, triukšmą ir chaosą, ne tik perskaitytum datas.",
         mustKnow:"Antradieniais muziejus paprastai nedirba. Jei jūsų 2 diena yra antradienis, šitą punktą reikia sukeisti su Koperniku arba palikti tik iš išorės.",
@@ -327,8 +352,8 @@
       {
         id:"d2-transfer-oldtown", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"11:45–12:15", title:"Pervažiavimas: Sukilimo muziejus → Stare Miasto / Barbakanas",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"12:05–12:45", title:"Pervažiavimas: Sukilimo muziejus → Stare Miasto / Barbakanas",
         description:"Čia yra pagrindinis dienos transporto perėjimas: iš Wola rajono judame į senamiestį ir nuo čia likusi diena eina viena kryptimi link upės.",
         mustKnow:"Tikslas nėra nuvažiuoti tiksliai iki pilies. Geriau atsidurti ties Stare Miasto / Muranów / Barbakanas zona ir pradėti ėjimą per senamiestį iš šiaurės į pietus.",
         transit:"Jakdojade / WTP vesti: Muzeum Powstania Warszawskiego → Stare Miasto arba Barbakan Warszawski. Rinktis mažiausiai persėdimų turintį tramvajaus / autobuso variantą.",
@@ -337,8 +362,8 @@
       {
         id:"d2-barbican", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"12:15–12:30", title:"Barbakanas — miesto sienos",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"12:45–13:00", title:"Barbakanas — miesto sienos",
         description:"Trumpas, fotogeniškas įėjimas į senamiestį. Čia pradedate ėjimą per istorinę Varšuvą be papildomo grįžimo atgal.",
         funFact:"Barbakanas atrodo kaip viduramžių kino dekoracija, bet Varšuvoje net ir „senoviniai“ objektai dažnai turi antrą — rekonstrukcijos — istoriją.",
         mustKnow:"Užtenka 10–15 min.: nuotrauka, sienų fragmentai, tada judėti žemyn į senamiesčio aikštę.",
@@ -348,8 +373,8 @@
       {
         id:"d2-old-town", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"12:30–13:05", title:"Senamiesčio turgaus aikštė (Rynek Starego Miasta)",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"13:00–13:30", title:"Senamiesčio turgaus aikštė (Rynek Starego Miasta)",
         description:"Senamiesčio širdis — spalvingi fasadai, kavinės, siauresnės gatvės ir UNESCO istorija. Tai geras vidurdienio sustojimas prieš pilį.",
         funFact:"Varšuvos senamiestis atrodo senas, bet daug jo yra pokario rekonstrukcija. Jo esmė — ne vien amžius, o užsispyręs sprendimas atkurti miestą po sunaikinimo.",
         mustKnow:"Nepainioti su Krokuva: Varšuvos senamiesčio vertė yra ne visiškai autentiškas senumas, o rekonstrukcijos tikslumas ir simbolika.",
@@ -359,8 +384,8 @@
       {
         id:"d2-castle-square", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"13:05–13:20", title:"Zamkowy aikštė — Sigizmundo kolona",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"13:30–13:45", title:"Zamkowy aikštė — Sigizmundo kolona",
         description:"Aikštė tarp senamiesčio, pilies ir Karališkojo trakto. Čia gerai susiorientuoti ir nuspręsti, kiek laiko skirti piliai.",
         funFact:"Aikštė veikia kaip miesto teatro scena: vienoje pusėje pilis, kitoje — senamiesčio vartai, apačioje — Vislos slėnis.",
         mustKnow:"Tai geras orientyras: jei pasiklysite senamiestyje, grįžkite prie kolonos ir vėl susidėliokite kryptį.",
@@ -370,8 +395,8 @@
       {
         id:"d2-royal-castle", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"13:20–14:30", title:"Karališkoji pilis (Zamek Królewski)",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"13:45–15:00", title:"Karališkoji pilis (Zamek Królewski)",
         description:"Pilis, kurią naciai susprogdino 1944 m., o lenkai atstatė akmuo po akmens pagal archyvinius šaltinius. Viduje: puošnios salės, Canaletto kolekcija, karališkoji istorija.",
         funFact:"Čia įdomiausia ne tik karališka prabanga, o faktas, kad didelė dalis to, ką matote, yra atkurtas miesto atminties darbas po sunaikinimo.",
         mustKnow:"Bilietus geriau pirkti iš anksto. Jei eilės didelės arba trūksta laiko, pilį galima trumpinti: išorė + aikštė + Karališkasis traktas.",
@@ -381,8 +406,8 @@
       {
         id:"d2-lunch", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"14:30–15:10", title:"Pietūs: senamiestis arba Krakowskie Przedmieście",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"15:00–15:45", title:"Pietūs: senamiestis arba Krakowskie Przedmieście",
         description:"Valgyti ten, kur patogiausia pagal laiką: senamiestyje, jeigu norisi tradicinės virtuvės, arba einant Karališkuoju traktu link Nowy Świat.",
         mustKnow:"Nesėskite ilgam pietų ritualui, nes dar liks Kopernikas ir vakarinė Visla. Tikslas — normaliai pavalgyti, bet neprarasti 1,5 val.",
         transit:"Transporto nereikia. Pietūs turi būti ant jūsų ėjimo linijos, ne šalutinis nukrypimas.",
@@ -391,8 +416,8 @@
       {
         id:"d2-royal-route", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"15:10–16:10", title:"Krakowskie Przedmieście → Nowy Świat",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"15:45–16:35", title:"Krakowskie Przedmieście → Nowy Świat",
         description:"Gražiausia istorinė gatvė Varšuvoje: Prezidento rūmai, Varšuvos universiteto vartai, Šv. Kryžiaus bažnyčia su Šopeno širdies istorija. Dabar einate ne į senamiestį, o iš jo — link centro ir upės.",
         funFact:"Tai dalis Karališkojo kelio — reprezentacinės miesto ašies, kur Varšuva parodo save per istoriją, universitetą, bažnyčias ir politinę galią.",
         mustKnow:"Čia verta žiūrėti į fasadus ir kiemus, ne tik praeiti gatvę. Tai ramesnė, elegantiškesnė Varšuvos pusė.",
@@ -402,8 +427,8 @@
       {
         id:"d2-transfer-copernicus", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"16:10–16:30", title:"Pervažiavimas / nusileidimas prie Koperniko centro",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"16:35–17:00", title:"Pervažiavimas / nusileidimas prie Koperniko centro",
         description:"Iš Karališkojo trakto leidžiamės prie Vislos. Čia jau nebegrįžtame į senamiestį — vakaras lieka prie upės.",
         mustKnow:"Jeigu pavargote, rinkitės M2 iki Centrum Nauki Kopernik. Jei turite jėgų, galima nusileisti pėsčiomis pro universiteto zoną.",
         transit:"Greičiausia dažnai yra M2 iki Centrum Nauki Kopernik. Tik tramvajais — tikrinti gyvai, nes maršrutas gali būti lėtesnis su persėdimu.",
@@ -412,8 +437,8 @@
       {
         id:"d2-copernicus", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"16:30–18:30", title:"Koperniko mokslo centras",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"17:00–18:50", title:"Koperniko mokslo centras",
         description:"Interaktyvus mokslo muziejus ant Vislos kranto — eksperimentai, instaliacijos, planetariumas. Po istorijos ir senamiesčio tai geras perjungimas į lengvesnį, aktyvų formatą.",
         funFact:"Čia normalu spausti, sukti, bandyti ir klysti. Tai labiau laboratorija nei klasikinis muziejus.",
         mustKnow:"Bilietus verta pirkti iš anksto. Jei ims nuovargis, rinkitės mažiau eksponatų, bet su jais pabūkite ilgiau — Kopernike laimi ne tempas, o smalsumas.",
@@ -423,8 +448,8 @@
       {
         id:"d2-vistula", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"18:30–19:30", title:"Vislos bulvarai vakare",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"18:50–19:30", title:"Vislos bulvarai vakare",
         description:"Tiesiai prie Koperniko centro. Upės pakrantė vakare — gyva, daug vietinių, gera vieta sumažinti tempą po muziejų.",
         funFact:"Varšuva turi dvi nuotaikas: oficialią miesto centro pusę ir laisvesnę Vislos pakrantę. Čia geriausiai jaučiasi antra.",
         mustKnow:"Prie upės gali būti vėsiau nei centre. Vakarui turėti lengvą sluoksnį.",
@@ -434,8 +459,8 @@
       {
         id:"d2-dinner", day:"day-2",
         dayTitle:"Diena 2 — Optimalus maršrutas be grįžinėjimo",
-        dayDescription:"09:00–22:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
-        time:"19:30–21:00", title:"Vakarienė — Elektrownia Powiśle",
+        dayDescription:"09:00–21:00 · Viešbutis → Sukilimo muziejus → Senamiestis → Karališkasis traktas → Kopernikas → Visla",
+        time:"19:35–21:00", title:"Vakarienė — Elektrownia Powiśle",
         description:"Modernus maisto ir gėrimų kompleksas senosiose elektrinės patalpose, netoli Koperniko centro. Logiškas finalas, nes esate tame pačiame rajone, o ne važiuojate į kitą miesto pusę.",
         funFact:"Gera vieta, nes nereikia demokratiškai kentėti dėl vieno restorano pasirinkimo — food hall formatas leidžia kiekvienam imti ką nori.",
         mustKnow:"Po ilgos dienos rinkitės paprastai: maistas, gėrimas, trumpas pasivaikščiojimas ir atgal į viešbutį.",
@@ -501,6 +526,10 @@
         longDescription: "Viešbučio Riverview Wellness Centre yra aukštuose virš miesto, todėl baseinas čia nėra tik „pasimaudymas“ — tai viena geresnių vietų ramiai pradėti Varšuvos vakarą su miesto panorama.",
         deeperMustKnow: "Turėti šlepetes, maudymosi aprangą ir nepalikti visko lagamine giliai apačioje. Po ilgos kelionės baseinas yra geras perėjimas iš autobuso režimo į miesto režimą."
       },
+      "d1-pool-transition": {
+        longDescription: "Šis punktas nėra lankytina vieta, bet jis daro maršrutą realų. Kelionėse dažniausiai sugriūna ne objektų laikai, o tarpai tarp jų: persirengimas, liftai, išėjimas iš viešbučio, orientavimasis, perėjos, sustojimas nuotraukai.",
+        deeperMustKnow: "Jeigu planas atrodo mažiau efektyvus, tai geras ženklas — jis tapo realesnis. Čia specialiai įdėta amortizacija, kad nereikėtų skubėti jau pirmą vakarą."
+      },
       "d1-palace": {
         officialUrl: "https://pkin.pl/en/home/",
         officialLabel: "PKiN svetainė",
@@ -515,6 +544,10 @@
         officialLabel: "Złote Tarasy",
         longDescription: "Złote Tarasy nėra „romantiškiausias“ pasirinkimas, bet pirmą vakarą jis praktiškas: šalia viešbučio, daug maisto pasirinkimų, nereikia spręsti sudėtingos logistikos po kelionės.",
         deeperMustKnow: "Pirmą vakarą neverta važiuoti toli vien dėl vakarienės. Rytoj pilna diena, todėl laimi trumpas atstumas ir paprastas sprendimas."
+      },
+      "d2-transfer-uprising": {
+        longDescription: "Tai praktinis perėjimas, kuris neatrodo kaip kelionės objektas, bet realiai užima laiką. Varšuvoje transportas geras, tačiau pirmą kartą važiuojant reikia skaičiuoti ne tik važiavimo minutes, bet ir orientavimąsi stotelėse.",
+        deeperMustKnow: "Jei programėlė rodo 18–22 min., plane vis tiek laikyti 30–35 min. Turistiniame grafike mažiau kenkia 10 min. rezervas negu 10 min. vėlavimas kiekviename žingsnyje."
       },
       "d2-uprising": {
         officialUrl: "https://www.1944.pl/en",
