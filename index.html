@@ -1,85 +1,28 @@
 <!doctype html>
-<html lang="lt">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b0d10">
-<title>Natural or Implant? Mobile Quiz</title>
+<title>Natural or Implant - Mobile Quiz</title>
 <style>
-:root{--bg:#0b0d10;--panel:#151922;--panel2:#1d2430;--text:#f5f7fb;--muted:#aeb7c7;--border:#30394a;--accent:#8ea6ff;--good:#42d67d;--bad:#ff6272;--warn:#f2c766;--radius:18px}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;background:radial-gradient(circle at top,#172033 0,#0b0d10 45%,#08090b 100%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-button,input,textarea{font:inherit}
-.app{width:min(760px,100%);margin:0 auto;padding:14px 14px 98px}
-header{position:sticky;top:0;z-index:5;margin:-14px -14px 0;padding:14px 14px 10px;background:linear-gradient(to bottom,rgba(11,13,16,.96),rgba(11,13,16,.74));backdrop-filter:blur(16px)}
-h1{font-size:clamp(24px,7vw,40px);line-height:1;margin:0 0 6px;letter-spacing:-.05em}
-.sub{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
-.stat{background:rgba(21,25,34,.9);border:1px solid var(--border);border-radius:14px;padding:10px 8px;min-height:62px}
-.stat b{display:block;font-size:20px;line-height:1}
-.stat span{display:block;color:var(--muted);font-size:11px;margin-top:6px}
-.card{background:linear-gradient(180deg,rgba(31,37,50,.96),rgba(17,21,29,.96));border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:0 18px 58px rgba(0,0,0,.36)}
-.tileWrap{position:relative;width:100%;aspect-ratio:460/430;border-radius:16px;overflow:hidden;background:#08090b;border:1px solid #3b4558}
-.tileWrap img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
-.num{position:absolute;top:8px;left:8px;background:#f4f4f4;color:#050505;border-radius:7px;padding:4px 8px;font-size:16px;font-weight:900;line-height:1}
-.qrow{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin:12px 0 8px}
-.small{font-size:12px;color:var(--muted)}
-.q{font-size:21px;font-weight:800;letter-spacing:-.025em;margin:0}
-.buttons{display:grid;gap:10px;margin-top:10px}
-.choice{width:100%;border:1px solid #3b455a;background:#273044;color:var(--text);border-radius:15px;padding:16px 14px;text-align:left;font-weight:800;font-size:16px;line-height:1.2;cursor:pointer;touch-action:manipulation;user-select:none}
-.choice:active,.primary:active,.ghost:active{transform:translateY(1px)}
-.choice[disabled]{cursor:default;opacity:1}
-.choice.good{background:rgba(66,214,125,.18);border-color:rgba(66,214,125,.74)}
-.choice.bad{background:rgba(255,98,114,.17);border-color:rgba(255,98,114,.65)}
-.result{display:none;margin-top:12px;border:1px solid #30394c;border-radius:15px;padding:12px;background:#101721;color:var(--muted);font-size:14px;line-height:1.42}
-.result.show{display:block}
-.result strong{color:var(--text)}
-.primary,.ghost{border-radius:15px;padding:15px 14px;font-weight:850;font-size:16px;cursor:pointer;touch-action:manipulation;user-select:none}
-.primary{display:none;width:100%;margin-top:12px;border:1px solid #5d75df;background:linear-gradient(180deg,#4968db,#344dab);color:white;text-align:center}
-.ghost{border:1px solid #3b455a;background:transparent;color:var(--muted);text-align:center}
-.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.notice{margin:12px 0 0;color:#c5cce0;background:rgba(242,199,102,.09);border:1px solid rgba(242,199,102,.25);border-radius:14px;padding:10px 12px;font-size:12px;line-height:1.35}
-.progress{margin-top:14px;display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
-.dot{aspect-ratio:1;border-radius:7px;background:#252c3a;border:1px solid #333d50;color:#6f7b91;font-size:10px;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
-.dot.done{background:#253a2d;border-color:#3b7550;color:#b8f0c9}
-.dot.now{outline:2px solid var(--accent);outline-offset:1px}
-.footerBar{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(11,13,16,.98),rgba(11,13,16,.72));backdrop-filter:blur(16px)}
-.footerInner{width:min(760px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media (min-width:720px){.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.qrow{margin-top:0}}
-</style>
-</head>
-<body>
-<div class="app">
-<header>
-<h1>Natural or Implant?</h1>
-<p class="sub">Mobile demo quiz. PaveikslÄliai Ä¯kelti tiesiai Ä¯ failÄ. Progresas saugomas <b>localStorage</b>.</p>
-</header>
-<div class="stats">
-<div class="stat"><b id="score">0</b><span>taÅ¡kai</span></div>
-<div class="stat"><b id="answered">0/60</b><span>atsakyta</span></div>
-<div class="stat"><b id="accuracy">0%</b><span>tikslumas</span></div>
-<div class="stat"><b id="streak">0</b><span>streak</span></div>
-</div>
-<main class="card grid2">
-<section>
-<div class="tileWrap"><img id="tileImg" alt="Quiz kortelÄ"><div id="tileNum" class="num">01</div></div>
-</section>
-<section>
-<div class="qrow"><div><p id="counter" class="small">KortelÄ 1 iÅ¡ 60</p><p class="q">Koks tavo spÄjimas?</p></div></div>
-<div class="buttons">
-<button type="button" class="choice" data-choice="natural">Atrodo natÅ«rali</button>
-<button type="button" class="choice" data-choice="implant">Atrodo po korekcijos / implantai</button>
-<button type="button" class="choice" data-choice="uncertain">Nepakanka informacijos</button>
-</div>
-<div id="result" class="result"></div>
-<button type="button" id="next" class="primary">Kita kortelÄ</button>
-<div class="tools"><button type="button" id="shuffle" class="ghost">MaiÅ¡yti</button><button type="button" id="jump" class="ghost">Neatsakyta</button></div>
-</section>
-</main>
-<div class="notice"><strong>Pastaba:</strong> labeliai Å¡iame faile yra sintetiniai demo duomenys, ne medicininÄ tiesa. Realiam produktui geriau naudoti edukacinÄ logikÄ, kur daÅ¾nai teisingas atsakymas yra ânepakanka informacijosâ.</div>
-<div id="progress" class="progress"></div>
-</div>
-<div class="footerBar"><div class="footerInner"><button type="button" id="restart" class="ghost">Reset</button><button type="button" id="export" class="ghost">Export JSON</button></div></div>
-<script>
-'use strict';
-const TOTAL=60;
+:root {
+  --bg:#0b0d10; --panel:#151922; --panel2:#1d2430; --text:#f5f7fb;
+  --muted:#aeb7c7; --border:#30394a; --accent:#8ea6ff;
+  --good:#42d67d; --bad:#ff6272; --warn:#f2c766;
+}
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { margin:0; min-height:100%; background:#0b0d10; color:var(--text); font-family:Arial, Helvetica, sans-serif; }
+body { background:radial-gradient(circle at top,#172033 0,#0b0d10 45%,#08090b 100%); }
+button { font:inherit; cursor:pointer; touch-action:manipulation; }
+.app { width:min(760px,100%); margin:0 auto; padding:14px 14px 118px; }
+header { position:sticky; top:0; z-index:5; margin:-14px -14px 0; padding:18px 14px 12px; background:linear-gradient(to bottom,rgba(11,13,16,.98),rgba(11,13,16,.78)); backdrop-filter:blur(14px); }
+h1 { font-size:clamp(30px,8vw,48px); line-height:1; margin:0 0 8px; letter-spacing:-.06em; }
+.sub { margin:0; color:var(--muted); font-size:15px; line-height:1.35; }
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
+.stat { background:rgba(21,25,34,.92); border:1px solid var(--border); border-radius:16px; padding:10px 8px; min-height:64px; }
+.stat b { display:block; font-size:24px; line-height:1; }
+.stat span { display:block; color:var(--muted); font-size:12px; margin-top:7px; }
+.card { background:linear-gradient(180deg,rgba(31,37,50,.96),rgba(17,21,29,.96)); border:1px solid var(--border); border-radius:24px; padding:12px; box-shadow:0 18px 58px rgba(0,0,0,.36); }
+.tileWrap { position:relative; width:100%; aspect-ratio:460/430; border-radius:20px; overflow:hidden; background:#090b0f; border:1px solid #3b4558; }
