@@ -1,105 +1,729 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Natural or Implant - Mobile Quiz v5</title>
-<style>
-  :root {
-    --bg:#080b12; --panel:#151b27; --panel2:#1d2637; --text:#f5f7fb;
-    --muted:#aeb7c7; --line:#344057; --btn:#29344a; --btn2:#35425c;
-    --ok:#37d67a; --bad:#ff5b6e; --warn:#ffd36a;
-  }
-  * { box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-  body { min-height:100svh; padding:16px 14px 34px; touch-action:manipulation; }
-  .app { max-width:520px; margin:0 auto; }
-  h1 { font-size:34px; line-height:1.02; margin:12px 0 8px; letter-spacing:-1.3px; }
-  .sub { color:var(--muted); font-size:16px; line-height:1.35; margin:0 0 12px; }
-  .status { display:inline-block; color:var(--muted); border:1px solid var(--line); background:#101722; border-radius:999px; padding:8px 11px; font-size:13px; margin:0 0 14px; }
-  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:0 0 14px; }
-  .stat { border:1px solid var(--line); background:#101722; border-radius:18px; padding:12px 10px; min-height:74px; }
-  .num { font-size:26px; font-weight:850; line-height:1; }
-  .lab { color:var(--muted); margin-top:8px; font-size:13px; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:24px; padding:14px; box-shadow:0 12px 36px rgba(0,0,0,.28); }
-  .photoWrap { position:relative; width:100%; background:#000; border:1px solid #53607a; border-radius:20px; overflow:hidden; }
-  .photo { display:block; width:100%; height:auto; object-fit:contain; background:#000; }
-  .badge { position:absolute; left:12px; top:12px; background:#fff; color:#000; font-weight:950; font-size:22px; border-radius:12px; padding:5px 13px; box-shadow:0 4px 12px rgba(0,0,0,.35); }
-  .meta { margin:14px 0 4px; color:var(--muted); font-size:15px; }
-  h2 { font-size:28px; margin:8px 0 14px; letter-spacing:-.7px; }
-  .answers { display:grid; gap:12px; }
-  button { appearance:none; -webkit-appearance:none; border:0; font:inherit; color:inherit; cursor:pointer; touch-action:manipulation; user-select:none; }
-  .answer, .action { width:100%; min-height:62px; border-radius:20px; padding:16px 20px; text-align:left; background:var(--btn); border:1px solid #52607d; font-size:20px; font-weight:800; }
-  .answer:active, .action:active { transform:scale(.992); filter:brightness(1.08); }
-  .answer.correct { background:rgba(55,214,122,.16); border-color:var(--ok); }
-  .answer.wrong { background:rgba(255,91,110,.16); border-color:var(--bad); }
-  .answer[disabled] { opacity:1; cursor:default; }
-  .feedback { min-height:50px; margin:14px 0 14px; color:var(--muted); font-size:16px; line-height:1.35; }
-  .feedback strong { color:var(--text); }
-  .actions { display:grid; gap:10px; }
-  .action { text-align:center; background:#101722; }
-  .next { background:#f5f7fb; color:#07101e; border-color:#fff; }
-  .minorActions { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .note { color:var(--muted); font-size:14px; line-height:1.45; margin:16px 6px 0; }
-  .exportPanel { margin-top:12px; border:1px solid var(--line); border-radius:18px; background:#101722; padding:12px; }
-  .exportPanel[hidden] { display:none; }
-  textarea { width:100%; min-height:160px; resize:vertical; border-radius:14px; border:1px solid #52607d; background:#050812; color:#e8eefc; padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; }
-  @media (max-width:390px) {
-    h1 { font-size:30px; }
-    .stats { gap:7px; }
-    .stat { padding:10px 8px; min-height:68px; border-radius:16px; }
-    .num { font-size:23px; }
-    h2 { font-size:25px; }
-    .answer, .action { font-size:18px; min-height:58px; border-radius:18px; padding:14px 16px; }
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f17" />
+  <title>Natural or Implant? Mobile Quiz</title>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --panel: #121a28;
+      --panel2: #172235;
+      --border: #33435f;
+      --text: #f5f7fb;
+      --muted: #aeb8ca;
+      --btn: #26344f;
+      --btnBorder: #586986;
+      --ok: #1f7a4d;
+      --bad: #8a2f38;
+      --warn: #9a6a1f;
+      --white: #ffffff;
+      --black: #05070b;
+      --radius: 22px;
+      --safeBottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      padding: 22px 16px calc(26px + var(--safeBottom));
+    }
+
+    .app {
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+
+    .header {
+      margin: 24px 0 22px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(38px, 9vw, 58px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 4.5vw, 24px);
+      line-height: 1.35;
+    }
+
+    .storage {
+      display: inline-flex;
+      margin-top: 16px;
+      padding: 10px 16px;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #0f1624;
+      font-size: 15px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px 0 18px;
+    }
+
+    .stat {
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      background: #101826;
+      padding: 14px 12px;
+      min-width: 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(27px, 7vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: clamp(13px, 3.5vw, 18px);
+    }
+
+    .card {
+      background: var(--panel);
+      border: 2px solid var(--border);
+      border-radius: 28px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .imageWrap {
+      position: relative;
+      border: 2px solid #56657d;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #05070b;
+      min-height: 230px;
+    }
+
+    .badge {
+      position: absolute;
+      z-index: 3;
+      top: 14px;
+      left: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      height: 52px;
+      padding: 0 14px;
+      border-radius: 16px;
+      background: var(--white);
+      color: var(--black);
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+    }
+
+    #photo {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 230px;
+      object-fit: cover;
+      object-position: center;
+      background: #05070b;
+    }
+
+    .imageError {
+      display: none;
+      padding: 80px 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .meta {
+      margin: 18px 0 6px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    h2 {
+      margin: 12px 0 16px;
+      font-size: clamp(34px, 8vw, 52px);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+    }
+
+    .answers {
+      display: grid;
+      gap: 14px;
+    }
+
+    button {
+      width: 100%;
+      border: 2px solid var(--btnBorder);
+      border-radius: 24px;
+      background: var(--btn);
+      color: var(--text);
+      padding: 22px 20px;
+      font: inherit;
+      font-size: clamp(21px, 5.7vw, 32px);
+      line-height: 1.1;
+      font-weight: 850;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      filter: brightness(1.08);
+    }
+
+    button.primary {
+      margin-top: 18px;
+      background: var(--white);
+      color: #09101d;
+      text-align: center;
+      border-color: var(--white);
+    }
+
+    button.secondary {
+      font-size: clamp(18px, 4.8vw, 26px);
+      text-align: center;
+      background: #0f1624;
+    }
+
+    button[disabled] {
+      opacity: 0.68;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .answerBtn.correct {
+      background: var(--ok);
+      border-color: #47b27b;
+    }
+
+    .answerBtn.wrong {
+      background: var(--bad);
+      border-color: #c35a66;
+    }
+
+    .answerBtn.selectedUnknown {
+      background: var(--warn);
+      border-color: #d39b3e;
+    }
+
+    .feedback {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: clamp(18px, 4.5vw, 22px);
+      line-height: 1.4;
+      min-height: 56px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .jsonBox {
+      display: none;
+      margin-top: 16px;
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      background: #070b12;
+      padding: 14px;
+    }
+
+    .jsonBox textarea {
+      width: 100%;
+      height: 220px;
+      resize: vertical;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .footer {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 430px) {
+      body {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      button {
+        border-radius: 22px;
+      }
+    }
+  </style>
 </head>
 <body>
-<main class="app">
-  <h1>Natural or Implant?</h1>
-  <p class="sub">Mobile demo quiz. Images are embedded in this single file. Progress is saved when the browser allows localStorage.</p>
-  <div class="status" id="storageStatus">Checking storage...</div>
+  <main class="app">
+    <header class="header">
+      <h1>Natural or Implant?</h1>
+      <p class="sub">
+        Mobile demo quiz for GitHub Pages. No database needed. Images are loaded from the repo folder.
+        Progress is saved in localStorage when the browser allows it.
+      </p>
+      <div id="storageStatus" class="storage">Checking storage...</div>
+    </header>
 
-  <section class="stats" aria-label="Stats">
-    <div class="stat"><div class="num" id="score">0</div><div class="lab">points</div></div>
-    <div class="stat"><div class="num"><span id="done">0</span>/60</div><div class="lab">answered</div></div>
-    <div class="stat"><div class="num" id="accuracy">0%</div><div class="lab">accuracy</div></div>
-    <div class="stat"><div class="num" id="streak">0</div><div class="lab">streak</div></div>
-  </section>
-
-  <section class="card">
-    <div class="photoWrap">
-      <img id="photo" class="photo" alt="Quiz card image">
-      <div class="badge" id="badge">01</div>
-    </div>
-
-    <div class="meta" id="meta">Card 1 of 60</div>
-    <h2>What is your guess?</h2>
-
-    <div class="answers">
-      <button type="button" class="answer" data-choice="natural" onclick="return choose('natural', event)" ontouchend="return choose('natural', event)" onpointerup="return choose('natural', event)">Looks natural</button>
-      <button type="button" class="answer" data-choice="implant" onclick="return choose('implant', event)" ontouchend="return choose('implant', event)" onpointerup="return choose('implant', event)">Looks corrected / implants</button>
-      <button type="button" class="answer" data-choice="unknown" onclick="return choose('unknown', event)" ontouchend="return choose('unknown', event)" onpointerup="return choose('unknown', event)">Not enough information</button>
-    </div>
-
-    <div class="feedback" id="feedback">Choose an answer. This is a synthetic demo, not a medical assessment.</div>
-
-    <div class="actions">
-      <button type="button" class="action next" onclick="return nextCard(event)" ontouchend="return nextCard(event)" onpointerup="return nextCard(event)">Next card</button>
-      <div class="minorActions">
-        <button type="button" class="action" onclick="return resetGame(event)" ontouchend="return resetGame(event)" onpointerup="return resetGame(event)">Reset</button>
-        <button type="button" class="action" onclick="return exportJSON(event)" ontouchend="return exportJSON(event)" onpointerup="return exportJSON(event)">Export JSON</button>
+    <section class="stats" aria-label="Stats">
+      <div class="stat">
+        <strong id="points">0</strong>
+        <span>points</span>
       </div>
-    </div>
-
-    <section class="exportPanel" id="exportPanel" hidden>
-      <textarea id="exportText" readonly></textarea>
-      <button type="button" class="action" style="margin-top:10px" onclick="return copyJSON(event)" ontouchend="return copyJSON(event)" onpointerup="return copyJSON(event)">Copy JSON</button>
+      <div class="stat">
+        <strong id="answered">0/60</strong>
+        <span>answered</span>
+      </div>
+      <div class="stat">
+        <strong id="accuracy">0%</strong>
+        <span>accuracy</span>
+      </div>
+      <div class="stat">
+        <strong id="streak">0</strong>
+        <span>streak</span>
+      </div>
     </section>
-  </section>
 
-  <p class="note">Demo labels are synthetic. For a real product, use consented educational data or make "not enough information" the main learning answer.</p>
-</main>
+    <section class="card">
+      <div class="imageWrap">
+        <span id="badge" class="badge">01</span>
+        <img id="photo" src="./images/card-01.jpg" alt="Quiz card image" loading="eager" decoding="async">
+        <div id="imageError" class="imageError">
+          Image not found.<br>
+          Expected path: <strong id="expectedPath">./images/card-01.jpg</strong><br><br>
+          Put images into the GitHub repo folder: <strong>/images/</strong>
+        </div>
+      </div>
 
-<script>
+      <p id="cardMeta" class="meta">Card 1 of 60</p>
+      <h2>What is your guess?</h2>
+
+      <div class="answers">
+        <button id="btnNatural" class="answerBtn" type="button" data-answer="natural">Looks natural</button>
+        <button id="btnImplant" class="answerBtn" type="button" data-answer="implant">Looks corrected / implants</button>
+        <button id="btnUnknown" class="answerBtn" type="button" data-answer="unknown">Not enough information</button>
+      </div>
+
+      <p id="feedback" class="feedback">
+        Choose an answer. This is a synthetic demo, not a medical assessment.
+      </p>
+
+      <button id="nextBtn" class="primary" type="button">Next card</button>
+
+      <div class="actions">
+        <button id="resetBtn" class="secondary" type="button">Reset</button>
+        <button id="exportBtn" class="secondary" type="button">Export JSON</button>
+      </div>
+
+      <div id="jsonBox" class="jsonBox">
+        <textarea id="jsonOutput" readonly></textarea>
+      </div>
+
+      <p class="footer">
+        Static GitHub Pages setup: place this file as <strong>index.html</strong> and upload images as
+        <strong>./images/card-01.jpg</strong> to <strong>./images/card-60.jpg</strong>.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const TOTAL_CARDS = 60;
+    const STORAGE_KEY = "natural_or_implant_quiz_static_v1";
+
+    /*
+      No database required.
+
+      Required repo structure:
+      /index.html
+      /images/card-01.jpg
+      /images/card-02.jpg
+      ...
+      /images/card-60.jpg
+
+      These labels are synthetic demo labels. Replace them with your own labels.
+      Recommended production approach: keep many answers as "unknown" because visual classification is unreliable.
+    */
+    const answerPattern = [
+      "unknown", "natural", "implant", "unknown", "natural",
+      "implant", "unknown", "natural", "implant", "unknown"
+    ];
+
+    const cards = Array.from({ length: TOTAL_CARDS }, function (_, index) {
+      const id = index + 1;
+      const padded = String(id).padStart(2, "0");
+      return {
+        id: id,
+        image: "./images/card-" + padded + ".jpg",
+        answer: answerPattern[index % answerPattern.length]
+      };
+    });
+
+    const els = {
+      storageStatus: document.getElementById("storageStatus"),
+      points: document.getElementById("points"),
+      answered: document.getElementById("answered"),
+      accuracy: document.getElementById("accuracy"),
+      streak: document.getElementById("streak"),
+      badge: document.getElementById("badge"),
+      photo: document.getElementById("photo"),
+      imageError: document.getElementById("imageError"),
+      expectedPath: document.getElementById("expectedPath"),
+      cardMeta: document.getElementById("cardMeta"),
+      feedback: document.getElementById("feedback"),
+      nextBtn: document.getElementById("nextBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      exportBtn: document.getElementById("exportBtn"),
+      jsonBox: document.getElementById("jsonBox"),
+      jsonOutput: document.getElementById("jsonOutput"),
+      answerButtons: Array.from(document.querySelectorAll(".answerBtn"))
+    };
+
+    let storageAvailable = false;
+
+    let state = {
+      currentIndex: 0,
+      answers: {},
+      points: 0,
+      streak: 0,
+      bestStreak: 0,
+      startedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    function testStorage() {
+      try {
+        const testKey = "__quiz_storage_test__";
+        localStorage.setItem(testKey, "1");
+        localStorage.removeItem(testKey);
+        storageAvailable = true;
+        els.storageStatus.textContent = "Storage: localStorage active";
+      } catch (err) {
+        storageAvailable = false;
+        els.storageStatus.textContent = "Storage: session only";
+      }
+    }
+
+    function saveState() {
+      state.updatedAt = new Date().toISOString();
+      if (!storageAvailable) return;
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        storageAvailable = false;
+        els.storageStatus.textContent = "Storage: session only";
+      }
+    }
+
+    function loadState() {
+      if (!storageAvailable) return;
+
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+
+        if (parsed && typeof parsed === "object") {
+          state = {
+            currentIndex: Number.isInteger(parsed.currentIndex) ? parsed.currentIndex : 0,
+            answers: parsed.answers && typeof parsed.answers === "object" ? parsed.answers : {},
+            points: Number.isInteger(parsed.points) ? parsed.points : 0,
+            streak: Number.isInteger(parsed.streak) ? parsed.streak : 0,
+            bestStreak: Number.isInteger(parsed.bestStreak) ? parsed.bestStreak : 0,
+            startedAt: parsed.startedAt || new Date().toISOString(),
+            updatedAt: parsed.updatedAt || new Date().toISOString()
+          };
+        }
+      } catch (err) {
+        state = {
+          currentIndex: 0,
+          answers: {},
+          points: 0,
+          streak: 0,
+          bestStreak: 0,
+          startedAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+      }
+    }
+
+    function currentCard() {
+      return cards[state.currentIndex] || cards[0];
+    }
+
+    function countAnswered() {
+      return Object.keys(state.answers).length;
+    }
+
+    function countCorrect() {
+      return Object.values(state.answers).filter(function (item) {
+        return item && item.correct === true;
+      }).length;
+    }
+
+    function renderStats() {
+      const answered = countAnswered();
+      const correct = countCorrect();
+      const accuracy = answered ? Math.round((correct / answered) * 100) : 0;
+
+      els.points.textContent = String(state.points);
+      els.answered.textContent = answered + "/" + TOTAL_CARDS;
+      els.accuracy.textContent = accuracy + "%";
+      els.streak.textContent = String(state.streak);
+    }
+
+    function resetButtonStyles() {
+      els.answerButtons.forEach(function (btn) {
+        btn.classList.remove("correct", "wrong", "selectedUnknown");
+        btn.disabled = false;
+      });
+    }
+
+    function renderCard() {
+      const card = currentCard();
+      const padded = String(card.id).padStart(2, "0");
+      const savedAnswer = state.answers[String(card.id)];
+
+      els.badge.textContent = padded;
+      els.cardMeta.textContent = "Card " + card.id + " of " + TOTAL_CARDS;
+      els.expectedPath.textContent = card.image;
+
+      els.imageError.style.display = "none";
+      els.photo.style.display = "block";
+      els.photo.src = card.image;
+
+      resetButtonStyles();
+
+      if (savedAnswer) {
+        els.feedback.textContent = savedAnswer.message;
+        markAnsweredButtons(savedAnswer.answer, card.answer);
+      } else {
+        els.feedback.textContent = "Choose an answer. This is a synthetic demo, not a medical assessment.";
+      }
+
+      renderStats();
+    }
+
+    function markAnsweredButtons(selected, correctAnswer) {
+      els.answerButtons.forEach(function (btn) {
+        const value = btn.dataset.answer;
+        btn.disabled = true;
+
+        if (value === correctAnswer) {
+          btn.classList.add("correct");
+        }
+
+        if (value === selected && selected !== correctAnswer) {
+          if (selected === "unknown") {
+            btn.classList.add("selectedUnknown");
+          } else {
+            btn.classList.add("wrong");
+          }
+        }
+      });
+    }
+
+    function makeFeedback(selected, correctAnswer, wasCorrect) {
+      if (wasCorrect) {
+        if (correctAnswer === "unknown") {
+          return "Correct. The safest answer is that the image alone is not enough.";
+        }
+        return "Correct for this synthetic demo label.";
+      }
+
+      if (correctAnswer === "unknown") {
+        return "Demo answer: not enough information. Visual guessing is unreliable.";
+      }
+
+      if (correctAnswer === "natural") {
+        return "Demo answer: natural. This is a synthetic demo label, not a medical conclusion.";
+      }
+
+      return "Demo answer: corrected / implants. This is a synthetic demo label, not a medical conclusion.";
+    }
+
+    function choose(answer) {
+      const card = currentCard();
+      const key = String(card.id);
+
+      if (state.answers[key]) return;
+
+      const wasCorrect = answer === card.answer;
+      const message = makeFeedback(answer, card.answer, wasCorrect);
+
+      state.answers[key] = {
+        cardId: card.id,
+        image: card.image,
+        answer: answer,
+        correctAnswer: card.answer,
+        correct: wasCorrect,
+        message: message,
+        answeredAt: new Date().toISOString()
+      };
+
+      if (wasCorrect) {
+        state.points += 1;
+        state.streak += 1;
+        state.bestStreak = Math.max(state.bestStreak, state.streak);
+      } else {
+        state.streak = 0;
+      }
+
+      els.feedback.textContent = message;
+      markAnsweredButtons(answer, card.answer);
+      saveState();
+      renderStats();
+    }
+
+    function nextCard() {
+      if (state.currentIndex < TOTAL_CARDS - 1) {
+        state.currentIndex += 1;
+      } else {
+        state.currentIndex = 0;
+      }
+
+      saveState();
+      renderCard();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function resetGame() {
+      state = {
+        currentIndex: 0,
+        answers: {},
+        points: 0,
+        streak: 0,
+        bestStreak: 0,
+        startedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      if (storageAvailable) {
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (err) {}
+      }
+
+      els.jsonBox.style.display = "none";
+      saveState();
+      renderCard();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function exportJSON() {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        totalCards: TOTAL_CARDS,
+        stats: {
+          points: state.points,
+          answered: countAnswered(),
+          correct: countCorrect(),
+          streak: state.streak,
+          bestStreak: state.bestStreak
+        },
+        state: state
+      };
+
+      els.jsonOutput.value = JSON.stringify(payload, null, 2);
+      els.jsonBox.style.display = "block";
+      els.jsonOutput.focus();
+      els.jsonOutput.select();
+    }
+
+    function bindEvents() {
+      els.answerButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          choose(btn.dataset.answer);
+        });
+      });
+
+      els.nextBtn.addEventListener("click", nextCard);
+      els.resetBtn.addEventListener("click", resetGame);
+      els.exportBtn.addEventListener("click", exportJSON);
+
+      els.photo.addEventListener("error", function () {
+        els.photo.style.display = "none";
+        els.imageError.style.display = "block";
+      });
+
+      els.photo.addEventListener("load", function () {
+        els.photo.style.display = "block";
+        els.imageError.style.display = "none";
+      });
+    }
+
+    function init() {
+      testStorage();
+      loadState();
+
+      if (state.currentIndex < 0 || state.currentIndex >= TOTAL_CARDS) {
+        state.currentIndex = 0;
+      }
+
+      bindEvents();
+      renderCard();
+      window.__quizDebug = {
+        cards: cards,
+        state: state,
+        choose: choose,
+        nextCard: nextCard,
+        resetGame: resetGame
+      };
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
