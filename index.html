@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0f17" />
-  <title>Natural or Implant? Mobile Quiz</title>
+  <title>Natural or Implant? Mobile Quiz - Root Images</title>
   <style>
     :root {
       --bg: #0b0f17;
@@ -304,7 +304,7 @@
     <header class="header">
       <h1>Natural or Implant?</h1>
       <p class="sub">
-        Mobile demo quiz for GitHub Pages. No database needed. Images are loaded from the repo folder.
+        Mobile demo quiz for GitHub Pages. No database needed. Images are loaded from the same folder as index.html.
         Progress is saved in localStorage when the browser allows it.
       </p>
       <div id="storageStatus" class="storage">Checking storage...</div>
@@ -332,11 +332,11 @@
     <section class="card">
       <div class="imageWrap">
         <span id="badge" class="badge">01</span>
-        <img id="photo" src="./images/card-01.jpg" alt="Quiz card image" loading="eager" decoding="async">
+        <img id="photo" src="./card-01.jpg" alt="Quiz card image" loading="eager" decoding="async">
         <div id="imageError" class="imageError">
           Image not found.<br>
-          Expected path: <strong id="expectedPath">./images/card-01.jpg</strong><br><br>
-          Put images into the GitHub repo folder: <strong>/images/</strong>
+          Expected path: <strong id="expectedPath">./card-01.jpg</strong><br><br>
+          Put images next to <strong>index.html</strong> in the repo root.
         </div>
       </div>
 
@@ -365,8 +365,8 @@
       </div>
 
       <p class="footer">
-        Static GitHub Pages setup: place this file as <strong>index.html</strong> and upload images as
-        <strong>./images/card-01.jpg</strong> to <strong>./images/card-60.jpg</strong>.
+        Static GitHub Pages setup: place this file as <strong>index.html</strong> and upload images next to it as
+        <strong>./card-01.jpg</strong> to <strong>./card-60.jpg</strong>.
       </p>
     </section>
   </main>
@@ -380,12 +380,12 @@
     /*
       No database required.
 
-      Required repo structure:
+      Required repo structure when images are next to index.html:
       /index.html
-      /images/card-01.jpg
-      /images/card-02.jpg
+      /card-01.jpg
+      /card-02.jpg
       ...
-      /images/card-60.jpg
+      /card-60.jpg
 
       These labels are synthetic demo labels. Replace them with your own labels.
       Recommended production approach: keep many answers as "unknown" because visual classification is unreliable.
@@ -400,7 +400,7 @@
       const padded = String(id).padStart(2, "0");
       return {
         id: id,
-        image: "./images/card-" + padded + ".jpg",
+        image: "./card-" + padded + ".jpg",
         answer: answerPattern[index % answerPattern.length]
       };
     });
