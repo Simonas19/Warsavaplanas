@@ -1,28 +1,105 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b0d10">
-<title>Natural or Implant - Mobile Quiz</title>
+<title>Natural or Implant - Mobile Quiz v5</title>
 <style>
-:root {
-  --bg:#0b0d10; --panel:#151922; --panel2:#1d2430; --text:#f5f7fb;
-  --muted:#aeb7c7; --border:#30394a; --accent:#8ea6ff;
-  --good:#42d67d; --bad:#ff6272; --warn:#f2c766;
-}
-* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html, body { margin:0; min-height:100%; background:#0b0d10; color:var(--text); font-family:Arial, Helvetica, sans-serif; }
-body { background:radial-gradient(circle at top,#172033 0,#0b0d10 45%,#08090b 100%); }
-button { font:inherit; cursor:pointer; touch-action:manipulation; }
-.app { width:min(760px,100%); margin:0 auto; padding:14px 14px 118px; }
-header { position:sticky; top:0; z-index:5; margin:-14px -14px 0; padding:18px 14px 12px; background:linear-gradient(to bottom,rgba(11,13,16,.98),rgba(11,13,16,.78)); backdrop-filter:blur(14px); }
-h1 { font-size:clamp(30px,8vw,48px); line-height:1; margin:0 0 8px; letter-spacing:-.06em; }
-.sub { margin:0; color:var(--muted); font-size:15px; line-height:1.35; }
-.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
-.stat { background:rgba(21,25,34,.92); border:1px solid var(--border); border-radius:16px; padding:10px 8px; min-height:64px; }
-.stat b { display:block; font-size:24px; line-height:1; }
-.stat span { display:block; color:var(--muted); font-size:12px; margin-top:7px; }
-.card { background:linear-gradient(180deg,rgba(31,37,50,.96),rgba(17,21,29,.96)); border:1px solid var(--border); border-radius:24px; padding:12px; box-shadow:0 18px 58px rgba(0,0,0,.36); }
-.tileWrap { position:relative; width:100%; aspect-ratio:460/430; border-radius:20px; overflow:hidden; background:#090b0f; border:1px solid #3b4558; }
+  :root {
+    --bg:#080b12; --panel:#151b27; --panel2:#1d2637; --text:#f5f7fb;
+    --muted:#aeb7c7; --line:#344057; --btn:#29344a; --btn2:#35425c;
+    --ok:#37d67a; --bad:#ff5b6e; --warn:#ffd36a;
+  }
+  * { box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  body { min-height:100svh; padding:16px 14px 34px; touch-action:manipulation; }
+  .app { max-width:520px; margin:0 auto; }
+  h1 { font-size:34px; line-height:1.02; margin:12px 0 8px; letter-spacing:-1.3px; }
+  .sub { color:var(--muted); font-size:16px; line-height:1.35; margin:0 0 12px; }
+  .status { display:inline-block; color:var(--muted); border:1px solid var(--line); background:#101722; border-radius:999px; padding:8px 11px; font-size:13px; margin:0 0 14px; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:0 0 14px; }
+  .stat { border:1px solid var(--line); background:#101722; border-radius:18px; padding:12px 10px; min-height:74px; }
+  .num { font-size:26px; font-weight:850; line-height:1; }
+  .lab { color:var(--muted); margin-top:8px; font-size:13px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:24px; padding:14px; box-shadow:0 12px 36px rgba(0,0,0,.28); }
+  .photoWrap { position:relative; width:100%; background:#000; border:1px solid #53607a; border-radius:20px; overflow:hidden; }
+  .photo { display:block; width:100%; height:auto; object-fit:contain; background:#000; }
+  .badge { position:absolute; left:12px; top:12px; background:#fff; color:#000; font-weight:950; font-size:22px; border-radius:12px; padding:5px 13px; box-shadow:0 4px 12px rgba(0,0,0,.35); }
+  .meta { margin:14px 0 4px; color:var(--muted); font-size:15px; }
+  h2 { font-size:28px; margin:8px 0 14px; letter-spacing:-.7px; }
+  .answers { display:grid; gap:12px; }
+  button { appearance:none; -webkit-appearance:none; border:0; font:inherit; color:inherit; cursor:pointer; touch-action:manipulation; user-select:none; }
+  .answer, .action { width:100%; min-height:62px; border-radius:20px; padding:16px 20px; text-align:left; background:var(--btn); border:1px solid #52607d; font-size:20px; font-weight:800; }
+  .answer:active, .action:active { transform:scale(.992); filter:brightness(1.08); }
+  .answer.correct { background:rgba(55,214,122,.16); border-color:var(--ok); }
+  .answer.wrong { background:rgba(255,91,110,.16); border-color:var(--bad); }
+  .answer[disabled] { opacity:1; cursor:default; }
+  .feedback { min-height:50px; margin:14px 0 14px; color:var(--muted); font-size:16px; line-height:1.35; }
+  .feedback strong { color:var(--text); }
+  .actions { display:grid; gap:10px; }
+  .action { text-align:center; background:#101722; }
+  .next { background:#f5f7fb; color:#07101e; border-color:#fff; }
+  .minorActions { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .note { color:var(--muted); font-size:14px; line-height:1.45; margin:16px 6px 0; }
+  .exportPanel { margin-top:12px; border:1px solid var(--line); border-radius:18px; background:#101722; padding:12px; }
+  .exportPanel[hidden] { display:none; }
+  textarea { width:100%; min-height:160px; resize:vertical; border-radius:14px; border:1px solid #52607d; background:#050812; color:#e8eefc; padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; }
+  @media (max-width:390px) {
+    h1 { font-size:30px; }
+    .stats { gap:7px; }
+    .stat { padding:10px 8px; min-height:68px; border-radius:16px; }
+    .num { font-size:23px; }
+    h2 { font-size:25px; }
+    .answer, .action { font-size:18px; min-height:58px; border-radius:18px; padding:14px 16px; }
+  }
+</style>
+</head>
+<body>
+<main class="app">
+  <h1>Natural or Implant?</h1>
+  <p class="sub">Mobile demo quiz. Images are embedded in this single file. Progress is saved when the browser allows localStorage.</p>
+  <div class="status" id="storageStatus">Checking storage...</div>
+
+  <section class="stats" aria-label="Stats">
+    <div class="stat"><div class="num" id="score">0</div><div class="lab">points</div></div>
+    <div class="stat"><div class="num"><span id="done">0</span>/60</div><div class="lab">answered</div></div>
+    <div class="stat"><div class="num" id="accuracy">0%</div><div class="lab">accuracy</div></div>
+    <div class="stat"><div class="num" id="streak">0</div><div class="lab">streak</div></div>
+  </section>
+
+  <section class="card">
+    <div class="photoWrap">
+      <img id="photo" class="photo" alt="Quiz card image">
+      <div class="badge" id="badge">01</div>
+    </div>
+
+    <div class="meta" id="meta">Card 1 of 60</div>
+    <h2>What is your guess?</h2>
+
+    <div class="answers">
+      <button type="button" class="answer" data-choice="natural" onclick="return choose('natural', event)" ontouchend="return choose('natural', event)" onpointerup="return choose('natural', event)">Looks natural</button>
+      <button type="button" class="answer" data-choice="implant" onclick="return choose('implant', event)" ontouchend="return choose('implant', event)" onpointerup="return choose('implant', event)">Looks corrected / implants</button>
+      <button type="button" class="answer" data-choice="unknown" onclick="return choose('unknown', event)" ontouchend="return choose('unknown', event)" onpointerup="return choose('unknown', event)">Not enough information</button>
+    </div>
+
+    <div class="feedback" id="feedback">Choose an answer. This is a synthetic demo, not a medical assessment.</div>
+
+    <div class="actions">
+      <button type="button" class="action next" onclick="return nextCard(event)" ontouchend="return nextCard(event)" onpointerup="return nextCard(event)">Next card</button>
+      <div class="minorActions">
+        <button type="button" class="action" onclick="return resetGame(event)" ontouchend="return resetGame(event)" onpointerup="return resetGame(event)">Reset</button>
+        <button type="button" class="action" onclick="return exportJSON(event)" ontouchend="return exportJSON(event)" onpointerup="return exportJSON(event)">Export JSON</button>
+      </div>
+    </div>
+
+    <section class="exportPanel" id="exportPanel" hidden>
+      <textarea id="exportText" readonly></textarea>
+      <button type="button" class="action" style="margin-top:10px" onclick="return copyJSON(event)" ontouchend="return copyJSON(event)" onpointerup="return copyJSON(event)">Copy JSON</button>
+    </section>
+  </section>
+
+  <p class="note">Demo labels are synthetic. For a real product, use consented educational data or make "not enough information" the main learning answer.</p>
+</main>
+
+<script>
