@@ -3,437 +3,277 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0f17" />
-  <title>Natural or Implant? Mobile Quiz - Root Images</title>
+  <meta name="theme-color" content="#080b12" />
+  <title>Natural or Implant? Round Quiz</title>
   <style>
     :root {
-      --bg: #0b0f17;
-      --panel: #121a28;
-      --panel2: #172235;
-      --border: #33435f;
-      --text: #f5f7fb;
-      --muted: #aeb8ca;
-      --btn: #26344f;
-      --btnBorder: #586986;
-      --ok: #1f7a4d;
-      --bad: #8a2f38;
-      --warn: #9a6a1f;
-      --white: #ffffff;
-      --black: #05070b;
-      --radius: 22px;
-      --safeBottom: env(safe-area-inset-bottom, 0px);
+      --bg:#080b12; --panel:#121a28; --panel2:#172235; --line:#33435f; --line2:#566986;
+      --text:#f5f7fb; --muted:#aeb8ca; --soft:#d6ddec; --white:#fff; --black:#05070b;
+      --btn:#26344f; --ok:#207a4d; --bad:#8a2f38; --warn:#9a6a1f; --safeBottom:env(safe-area-inset-bottom,0px);
     }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
-    body {
-      margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    body {
-      padding: 22px 16px calc(26px + var(--safeBottom));
-    }
-
-    .app {
-      width: min(760px, 100%);
-      margin: 0 auto;
-    }
-
-    .header {
-      margin: 24px 0 22px;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(38px, 9vw, 58px);
-      line-height: 0.96;
-      letter-spacing: -0.06em;
-    }
-
-    .sub {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(17px, 4.5vw, 24px);
-      line-height: 1.35;
-    }
-
-    .storage {
-      display: inline-flex;
-      margin-top: 16px;
-      padding: 10px 16px;
-      border: 2px solid var(--border);
-      border-radius: 999px;
-      color: var(--muted);
-      background: #0f1624;
-      font-size: 15px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin: 18px 0 18px;
-    }
-
-    .stat {
-      border: 2px solid var(--border);
-      border-radius: 18px;
-      background: #101826;
-      padding: 14px 12px;
-      min-width: 0;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: clamp(27px, 7vw, 44px);
-      line-height: 1;
-      letter-spacing: -0.04em;
-      white-space: nowrap;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: clamp(13px, 3.5vw, 18px);
-    }
-
-    .card {
-      background: var(--panel);
-      border: 2px solid var(--border);
-      border-radius: 28px;
-      padding: 16px;
-      overflow: hidden;
-    }
-
-    .imageWrap {
-      position: relative;
-      border: 2px solid #56657d;
-      border-radius: 22px;
-      overflow: hidden;
-      background: #05070b;
-      min-height: 230px;
-    }
-
-    .badge {
-      position: absolute;
-      z-index: 3;
-      top: 14px;
-      left: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 74px;
-      height: 52px;
-      padding: 0 14px;
-      border-radius: 16px;
-      background: var(--white);
-      color: var(--black);
-      font-weight: 900;
-      font-size: 28px;
-      letter-spacing: -0.04em;
-      box-shadow: 0 6px 16px rgba(0,0,0,.22);
-    }
-
-    #photo {
-      display: block;
-      width: 100%;
-      height: auto;
-      min-height: 230px;
-      object-fit: cover;
-      object-position: center;
-      background: #05070b;
-    }
-
-    .imageError {
-      display: none;
-      padding: 80px 18px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-
-    .meta {
-      margin: 18px 0 6px;
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    h2 {
-      margin: 12px 0 16px;
-      font-size: clamp(34px, 8vw, 52px);
-      line-height: 1.02;
-      letter-spacing: -0.055em;
-    }
-
-    .answers {
-      display: grid;
-      gap: 14px;
-    }
-
-    button {
-      width: 100%;
-      border: 2px solid var(--btnBorder);
-      border-radius: 24px;
-      background: var(--btn);
-      color: var(--text);
-      padding: 22px 20px;
-      font: inherit;
-      font-size: clamp(21px, 5.7vw, 32px);
-      line-height: 1.1;
-      font-weight: 850;
-      text-align: left;
-      cursor: pointer;
-      touch-action: manipulation;
-      user-select: none;
-    }
-
-    button:active {
-      transform: translateY(1px);
-      filter: brightness(1.08);
-    }
-
-    button.primary {
-      margin-top: 18px;
-      background: var(--white);
-      color: #09101d;
-      text-align: center;
-      border-color: var(--white);
-    }
-
-    button.secondary {
-      font-size: clamp(18px, 4.8vw, 26px);
-      text-align: center;
-      background: #0f1624;
-    }
-
-    button[disabled] {
-      opacity: 0.68;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .answerBtn.correct {
-      background: var(--ok);
-      border-color: #47b27b;
-    }
-
-    .answerBtn.wrong {
-      background: var(--bad);
-      border-color: #c35a66;
-    }
-
-    .answerBtn.selectedUnknown {
-      background: var(--warn);
-      border-color: #d39b3e;
-    }
-
-    .feedback {
-      margin: 16px 0 0;
-      color: var(--muted);
-      font-size: clamp(18px, 4.5vw, 22px);
-      line-height: 1.4;
-      min-height: 56px;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .jsonBox {
-      display: none;
-      margin-top: 16px;
-      border: 2px solid var(--border);
-      border-radius: 18px;
-      background: #070b12;
-      padding: 14px;
-    }
-
-    .jsonBox textarea {
-      width: 100%;
-      height: 220px;
-      resize: vertical;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: var(--text);
-      font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-
-    .footer {
-      margin: 18px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    @media (max-width: 430px) {
-      body {
-        padding-left: 14px;
-        padding-right: 14px;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .card {
-        padding: 14px;
-      }
-
-      button {
-        border-radius: 22px;
-      }
-    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{padding:22px 14px calc(28px + var(--safeBottom))}
+    .app{width:min(760px,100%);margin:0 auto}.hidden{display:none!important}.header{margin:24px 0 18px}
+    h1{margin:0 0 10px;font-size:clamp(38px,9vw,62px);line-height:.96;letter-spacing:-.06em}
+    h2{margin:0 0 14px;font-size:clamp(30px,7.5vw,48px);line-height:1.04;letter-spacing:-.055em}
+    p{margin:0}.sub{color:var(--muted);font-size:clamp(17px,4.6vw,23px);line-height:1.35}
+    .pill{display:inline-flex;margin-top:14px;padding:10px 14px;border:2px solid var(--line);border-radius:999px;color:var(--muted);background:#0f1624;font-size:14px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+    .stat{border:2px solid var(--line);border-radius:18px;background:#101826;padding:14px 12px;min-width:0}
+    .stat strong{display:block;font-size:clamp(25px,6.5vw,40px);line-height:1;letter-spacing:-.045em;white-space:nowrap}
+    .stat span{display:block;margin-top:8px;color:var(--muted);font-size:clamp(13px,3.4vw,17px)}
+    .panel{background:var(--panel);border:2px solid var(--line);border-radius:28px;padding:18px;overflow:hidden}
+    .startGrid{display:grid;gap:14px;margin-top:16px}.miniCards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+    .mini{background:#0f1624;border:2px solid var(--line);border-radius:20px;padding:16px}.mini strong{display:block;font-size:28px;line-height:1;letter-spacing:-.04em}
+    .mini span{display:block;margin-top:8px;color:var(--muted);font-size:15px;line-height:1.3}
+    .progressTrack{width:100%;height:14px;margin:16px 0 8px;border-radius:999px;background:#0a0f19;border:1px solid var(--line);overflow:hidden}
+    .progressBar{width:0%;height:100%;background:linear-gradient(90deg,#d6ddec,#8092bd);border-radius:999px;transition:width .25s ease}
+    .imageWrap{position:relative;border:2px solid var(--line2);border-radius:22px;overflow:hidden;background:#05070b;min-height:220px;margin-bottom:16px}
+    .badge{position:absolute;z-index:3;top:14px;left:14px;display:inline-flex;align-items:center;justify-content:center;min-width:74px;height:52px;padding:0 14px;border-radius:16px;background:var(--white);color:var(--black);font-weight:900;font-size:28px;letter-spacing:-.04em;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+    #photo{display:block;width:100%;height:auto;min-height:220px;object-fit:cover;object-position:center;background:#05070b}
+    .imageError{display:none;padding:80px 18px;color:var(--muted);text-align:center;font-size:16px;line-height:1.4}
+    .meta{color:var(--muted);font-size:18px;line-height:1.35;margin:0 0 8px}
+    .confidence{margin:14px 0 16px;padding:14px;border:2px solid var(--line);border-radius:20px;background:#0f1624}.confidenceTitle{color:var(--muted);font-size:15px;margin-bottom:10px}
+    .confidenceBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    button{width:100%;border:2px solid var(--line2);border-radius:24px;background:var(--btn);color:var(--text);padding:20px 18px;font:inherit;font-size:clamp(20px,5.3vw,30px);line-height:1.12;font-weight:850;text-align:left;cursor:pointer;touch-action:manipulation;user-select:none}
+    button:active{transform:translateY(1px);filter:brightness(1.08)}button.small{padding:13px 12px;border-radius:16px;font-size:15px;text-align:center;font-weight:800}
+    button.small.active{background:var(--white);color:#0b1120;border-color:var(--white)}button.primary{background:var(--white);color:#09101d;border-color:var(--white);text-align:center}
+    button.secondary{background:#0f1624;text-align:center;font-size:clamp(18px,4.8vw,25px)}button.danger{background:#24131a;border-color:#70404a;text-align:center;font-size:clamp(18px,4.8vw,25px)}
+    button[disabled]{opacity:.7;cursor:not-allowed;transform:none}.answers{display:grid;gap:13px}
+    .answerBtn.correct{background:var(--ok);border-color:#47b27b}.answerBtn.wrong{background:var(--bad);border-color:#c35a66}.answerBtn.selectedUnknown{background:var(--warn);border-color:#d39b3e;color:#101010}
+    .reveal{display:none;margin-top:16px;border:2px solid var(--line);border-radius:22px;background:#0f1624;padding:16px}.reveal.show{display:block}
+    .resultLine{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:16px;line-height:1.35}
+    .resultLine:last-child{border-bottom:0}.resultLine strong{color:var(--text);text-align:right}.resultBadge{display:inline-flex;padding:8px 12px;border-radius:999px;font-weight:900;font-size:15px;margin-bottom:12px}
+    .resultBadge.ok{background:rgba(32,122,77,.25);color:#8be4b4;border:1px solid #47b27b}.resultBadge.bad{background:rgba(138,47,56,.28);color:#ffadb6;border:1px solid #c35a66}
+    .explanation{margin-top:12px;color:var(--soft);font-size:17px;line-height:1.4}.nextArea{display:grid;gap:12px;margin-top:16px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .summaryHero{border:2px solid var(--line);border-radius:24px;padding:18px;background:linear-gradient(180deg,#18243a,#101826);margin-bottom:16px}.profile{font-size:clamp(32px,8vw,54px);line-height:1;letter-spacing:-.055em;font-weight:950;margin:8px 0 10px}.summaryText{color:var(--muted);font-size:18px;line-height:1.42}
+    .reviewList{display:grid;gap:12px;margin-top:16px}.reviewItem{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;padding:12px;background:#0f1624;border:2px solid var(--line);border-radius:18px}
+    .reviewItem img{width:72px;height:58px;border-radius:12px;object-fit:cover;background:#05070b}.reviewText{font-size:14px;color:var(--muted);line-height:1.35}.reviewText strong{display:block;color:var(--text);font-size:16px;margin-bottom:3px}
+    .jsonBox{display:none;margin-top:16px;border:2px solid var(--line);border-radius:18px;background:#070b12;padding:14px}.jsonBox textarea{width:100%;height:220px;resize:vertical;border:0;outline:0;background:transparent;color:var(--text);font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .footer{margin:16px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+    @media(max-width:430px){.stats{grid-template-columns:repeat(2,1fr)}.panel{padding:15px}.actions{grid-template-columns:1fr}.confidenceBtns{grid-template-columns:1fr}.reviewItem{grid-template-columns:64px 1fr}.reviewItem img{width:64px;height:54px}}
   </style>
 </head>
 <body>
   <main class="app">
     <header class="header">
       <h1>Natural or Implant?</h1>
-      <p class="sub">
-        Mobile demo quiz for GitHub Pages. No database needed. Images are loaded from the same folder as index.html.
-        Progress is saved in localStorage when the browser allows it.
-      </p>
-      <div id="storageStatus" class="storage">Checking storage...</div>
+      <p class="sub">10-card rounds from a 60-card image pool. Immediate reveal after every guess. Static GitHub Pages build, no database required.</p>
+      <div id="storageStatus" class="pill">Checking storage...</div>
     </header>
 
     <section class="stats" aria-label="Stats">
-      <div class="stat">
-        <strong id="points">0</strong>
-        <span>points</span>
+      <div class="stat"><strong id="totalRounds">0</strong><span>rounds</span></div>
+      <div class="stat"><strong id="totalSeen">0/60</strong><span>seen</span></div>
+      <div class="stat"><strong id="totalAccuracy">0%</strong><span>accuracy</span></div>
+      <div class="stat"><strong id="bestStreak">0</strong><span>best streak</span></div>
+    </section>
+
+    <section id="startScreen" class="panel">
+      <h2>Play a short round</h2>
+      <p class="sub">A full 60-card session is too long. This version uses 10-card rounds, keeps total progress, and gives a summary after each round.</p>
+      <div class="miniCards">
+        <div class="mini"><strong id="startSeen">0/60</strong><span>cards discovered</span></div>
+        <div class="mini"><strong id="startRounds">0</strong><span>rounds completed</span></div>
+        <div class="mini"><strong id="startAcc">0%</strong><span>all-time accuracy</span></div>
+        <div class="mini"><strong id="startHighWrong">0</strong><span>high-confidence misses</span></div>
       </div>
-      <div class="stat">
-        <strong id="answered">0/60</strong>
-        <span>answered</span>
-      </div>
-      <div class="stat">
-        <strong id="accuracy">0%</strong>
-        <span>accuracy</span>
-      </div>
-      <div class="stat">
-        <strong id="streak">0</strong>
-        <span>streak</span>
+      <div class="progressTrack"><div id="collectionProgress" class="progressBar"></div></div>
+      <p class="footer">Collection progress: the game prefers unseen cards first, then reshuffles old cards.</p>
+      <div class="startGrid">
+        <button id="startRoundBtn" class="primary" type="button">Start 10-card round</button>
+        <button id="continueRoundBtn" class="secondary hidden" type="button">Continue current round</button>
+        <button id="resetAllBtn" class="danger" type="button">Reset all progress</button>
       </div>
     </section>
 
-    <section class="card">
+    <section id="gameScreen" class="panel hidden">
       <div class="imageWrap">
         <span id="badge" class="badge">01</span>
         <img id="photo" src="./card-01.jpg" alt="Quiz card image" loading="eager" decoding="async">
-        <div id="imageError" class="imageError">
-          Image not found.<br>
-          Expected path: <strong id="expectedPath">./card-01.jpg</strong><br><br>
-          Put images next to <strong>index.html</strong> in the repo root.
+        <div id="imageError" class="imageError">Image not found.<br>Expected path: <strong id="expectedPath">./card-01.jpg</strong><br><br>Put images next to <strong>index.html</strong>: <strong>card-01.jpg</strong> to <strong>card-60.jpg</strong>.</div>
+      </div>
+      <p id="roundMeta" class="meta">Round 1 Â· Question 1/10</p>
+      <h2>What is your guess?</h2>
+      <div class="confidence">
+        <div class="confidenceTitle">How sure are you before guessing?</div>
+        <div class="confidenceBtns">
+          <button class="small confidenceBtn" type="button" data-confidence="low">Low</button>
+          <button class="small confidenceBtn active" type="button" data-confidence="medium">Medium</button>
+          <button class="small confidenceBtn" type="button" data-confidence="high">High</button>
         </div>
       </div>
-
-      <p id="cardMeta" class="meta">Card 1 of 60</p>
-      <h2>What is your guess?</h2>
-
       <div class="answers">
-        <button id="btnNatural" class="answerBtn" type="button" data-answer="natural">Looks natural</button>
-        <button id="btnImplant" class="answerBtn" type="button" data-answer="implant">Looks corrected / implants</button>
-        <button id="btnUnknown" class="answerBtn" type="button" data-answer="unknown">Not enough information</button>
+        <button class="answerBtn" type="button" data-answer="natural">Looks natural</button>
+        <button class="answerBtn" type="button" data-answer="implant">Looks corrected / implants</button>
+        <button class="answerBtn" type="button" data-answer="unknown">Not enough information</button>
       </div>
+      <div id="reveal" class="reveal">
+        <div id="resultBadge" class="resultBadge">Result</div>
+        <div class="resultLine"><span>Your guess</span><strong id="yourGuess">-</strong></div>
+        <div class="resultLine"><span>Demo label</span><strong id="demoLabel">-</strong></div>
+        <div class="resultLine"><span>Confidence</span><strong id="confidenceOut">-</strong></div>
+        <p id="explanation" class="explanation"></p>
+      </div>
+      <div class="nextArea">
+        <button id="nextBtn" class="primary" type="button">Next card</button>
+        <button id="quitRoundBtn" class="secondary" type="button">Back to start</button>
+      </div>
+    </section>
 
-      <p id="feedback" class="feedback">
-        Choose an answer. This is a synthetic demo, not a medical assessment.
-      </p>
-
-      <button id="nextBtn" class="primary" type="button">Next card</button>
-
+    <section id="summaryScreen" class="panel hidden">
+      <div class="summaryHero">
+        <p class="meta">Round complete</p>
+        <div id="profileTitle" class="profile">Careful Observer</div>
+        <p id="profileText" class="summaryText"></p>
+      </div>
+      <div class="miniCards">
+        <div class="mini"><strong id="roundScore">0/10</strong><span>round score</span></div>
+        <div class="mini"><strong id="roundAccuracy">0%</strong><span>round accuracy</span></div>
+        <div class="mini"><strong id="roundBestStreak">0</strong><span>best streak</span></div>
+        <div class="mini"><strong id="roundHighWrong">0</strong><span>high-confidence misses</span></div>
+      </div>
       <div class="actions">
-        <button id="resetBtn" class="secondary" type="button">Reset</button>
+        <button id="playAgainBtn" class="primary" type="button">Play another round</button>
+        <button id="reviewBtn" class="secondary" type="button">Review answers</button>
+      </div>
+      <div class="actions">
+        <button id="summaryHomeBtn" class="secondary" type="button">Back to start</button>
         <button id="exportBtn" class="secondary" type="button">Export JSON</button>
       </div>
-
-      <div id="jsonBox" class="jsonBox">
-        <textarea id="jsonOutput" readonly></textarea>
-      </div>
-
-      <p class="footer">
-        Static GitHub Pages setup: place this file as <strong>index.html</strong> and upload images next to it as
-        <strong>./card-01.jpg</strong> to <strong>./card-60.jpg</strong>.
-      </p>
+      <div id="jsonBox" class="jsonBox"><textarea id="jsonOutput" readonly></textarea></div>
     </section>
+
+    <section id="reviewScreen" class="panel hidden">
+      <h2>Round review</h2>
+      <p class="sub">Review shows your guess, the demo label, and the confidence level. Labels are synthetic game data, not medical conclusions.</p>
+      <div id="reviewList" class="reviewList"></div>
+      <div class="actions">
+        <button id="reviewBackBtn" class="primary" type="button">Back to summary</button>
+        <button id="reviewHomeBtn" class="secondary" type="button">Back to start</button>
+      </div>
+    </section>
+
+    <p class="footer">Static setup: <strong>index.html</strong> and <strong>card-01.jpg</strong> to <strong>card-60.jpg</strong> must be in the same GitHub Pages folder. The answer labels are demo labels.</p>
   </main>
 
   <script>
     "use strict";
-
     const TOTAL_CARDS = 60;
-    const STORAGE_KEY = "natural_or_implant_quiz_static_v1";
+    const ROUND_SIZE = 10;
+    const STORAGE_KEY = "natural_implant_round_quiz_v2_root_images";
 
-    /*
-      No database required.
+    const labelText = {
+      natural: "Looks natural",
+      implant: "Corrected / implants",
+      unknown: "Not enough information"
+    };
 
-      Required repo structure when images are next to index.html:
-      /index.html
-      /card-01.jpg
-      /card-02.jpg
-      ...
-      /card-60.jpg
+    const confidenceText = {
+      low: "Low",
+      medium: "Medium",
+      high: "High"
+    };
 
-      These labels are synthetic demo labels. Replace them with your own labels.
-      Recommended production approach: keep many answers as "unknown" because visual classification is unreliable.
-    */
     const answerPattern = [
-      "unknown", "natural", "implant", "unknown", "natural",
-      "implant", "unknown", "natural", "implant", "unknown"
+      "unknown","natural","implant","unknown","natural",
+      "implant","unknown","natural","implant","unknown"
     ];
 
-    const cards = Array.from({ length: TOTAL_CARDS }, function (_, index) {
+    const trapPattern = [
+      "Visual trap: shape alone is not reliable evidence.",
+      "Bias trap: symmetry can be natural or created by posture, clothing, or camera angle.",
+      "Confidence trap: being sure from one image is usually overconfidence.",
+      "Context trap: lighting, pose, and support garment can change the visual impression.",
+      "Safe call: in real life, image-only classification is often not enough."
+    ];
+
+    const cards = Array.from({ length: TOTAL_CARDS }, function(_, index) {
       const id = index + 1;
       const padded = String(id).padStart(2, "0");
+      const answer = answerPattern[index % answerPattern.length];
       return {
         id: id,
         image: "./card-" + padded + ".jpg",
-        answer: answerPattern[index % answerPattern.length]
+        answer: answer,
+        explanation: buildExplanation(answer, trapPattern[index % trapPattern.length])
       };
     });
 
+    function buildExplanation(answer, trap) {
+      if (answer === "unknown") {
+        return "Demo label: not enough information. " + trap + " This is a synthetic game label, not a medical assessment.";
+      }
+      if (answer === "natural") {
+        return "Demo label: natural. " + trap + " In real life, this could not be treated as proof from the image alone.";
+      }
+      return "Demo label: corrected / implants. " + trap + " In real life, this could not be treated as proof from the image alone.";
+    }
+
     const els = {
       storageStatus: document.getElementById("storageStatus"),
-      points: document.getElementById("points"),
-      answered: document.getElementById("answered"),
-      accuracy: document.getElementById("accuracy"),
-      streak: document.getElementById("streak"),
+      totalRounds: document.getElementById("totalRounds"),
+      totalSeen: document.getElementById("totalSeen"),
+      totalAccuracy: document.getElementById("totalAccuracy"),
+      bestStreak: document.getElementById("bestStreak"),
+      startScreen: document.getElementById("startScreen"),
+      gameScreen: document.getElementById("gameScreen"),
+      summaryScreen: document.getElementById("summaryScreen"),
+      reviewScreen: document.getElementById("reviewScreen"),
+      startSeen: document.getElementById("startSeen"),
+      startRounds: document.getElementById("startRounds"),
+      startAcc: document.getElementById("startAcc"),
+      startHighWrong: document.getElementById("startHighWrong"),
+      collectionProgress: document.getElementById("collectionProgress"),
+      startRoundBtn: document.getElementById("startRoundBtn"),
+      continueRoundBtn: document.getElementById("continueRoundBtn"),
+      resetAllBtn: document.getElementById("resetAllBtn"),
       badge: document.getElementById("badge"),
       photo: document.getElementById("photo"),
       imageError: document.getElementById("imageError"),
       expectedPath: document.getElementById("expectedPath"),
-      cardMeta: document.getElementById("cardMeta"),
-      feedback: document.getElementById("feedback"),
+      roundMeta: document.getElementById("roundMeta"),
+      confidenceButtons: Array.from(document.querySelectorAll(".confidenceBtn")),
+      answerButtons: Array.from(document.querySelectorAll(".answerBtn")),
+      reveal: document.getElementById("reveal"),
+      resultBadge: document.getElementById("resultBadge"),
+      yourGuess: document.getElementById("yourGuess"),
+      demoLabel: document.getElementById("demoLabel"),
+      confidenceOut: document.getElementById("confidenceOut"),
+      explanation: document.getElementById("explanation"),
       nextBtn: document.getElementById("nextBtn"),
-      resetBtn: document.getElementById("resetBtn"),
+      quitRoundBtn: document.getElementById("quitRoundBtn"),
+      profileTitle: document.getElementById("profileTitle"),
+      profileText: document.getElementById("profileText"),
+      roundScore: document.getElementById("roundScore"),
+      roundAccuracy: document.getElementById("roundAccuracy"),
+      roundBestStreak: document.getElementById("roundBestStreak"),
+      roundHighWrong: document.getElementById("roundHighWrong"),
+      playAgainBtn: document.getElementById("playAgainBtn"),
+      reviewBtn: document.getElementById("reviewBtn"),
+      summaryHomeBtn: document.getElementById("summaryHomeBtn"),
       exportBtn: document.getElementById("exportBtn"),
       jsonBox: document.getElementById("jsonBox"),
       jsonOutput: document.getElementById("jsonOutput"),
-      answerButtons: Array.from(document.querySelectorAll(".answerBtn"))
+      reviewList: document.getElementById("reviewList"),
+      reviewBackBtn: document.getElementById("reviewBackBtn"),
+      reviewHomeBtn: document.getElementById("reviewHomeBtn")
     };
 
     let storageAvailable = false;
+    let selectedConfidence = "medium";
 
     let state = {
-      currentIndex: 0,
-      answers: {},
-      points: 0,
-      streak: 0,
+      seenCardIds: [],
+      completedRounds: 0,
+      totalAnswered: 0,
+      totalCorrect: 0,
+      totalHighConfidenceWrong: 0,
       bestStreak: 0,
-      startedAt: new Date().toISOString(),
+      currentStreak: 0,
+      currentRound: null,
+      lastRoundSummary: null,
       updatedAt: new Date().toISOString()
     };
 
@@ -453,10 +293,8 @@
     function saveState() {
       state.updatedAt = new Date().toISOString();
       if (!storageAvailable) return;
-
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (err) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+      catch (err) {
         storageAvailable = false;
         els.storageStatus.textContent = "Storage: session only";
       }
@@ -464,214 +302,352 @@
 
     function loadState() {
       if (!storageAvailable) return;
-
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) return;
-
         const parsed = JSON.parse(raw);
-
         if (parsed && typeof parsed === "object") {
           state = {
-            currentIndex: Number.isInteger(parsed.currentIndex) ? parsed.currentIndex : 0,
-            answers: parsed.answers && typeof parsed.answers === "object" ? parsed.answers : {},
-            points: Number.isInteger(parsed.points) ? parsed.points : 0,
-            streak: Number.isInteger(parsed.streak) ? parsed.streak : 0,
+            seenCardIds: Array.isArray(parsed.seenCardIds) ? parsed.seenCardIds : [],
+            completedRounds: Number.isInteger(parsed.completedRounds) ? parsed.completedRounds : 0,
+            totalAnswered: Number.isInteger(parsed.totalAnswered) ? parsed.totalAnswered : 0,
+            totalCorrect: Number.isInteger(parsed.totalCorrect) ? parsed.totalCorrect : 0,
+            totalHighConfidenceWrong: Number.isInteger(parsed.totalHighConfidenceWrong) ? parsed.totalHighConfidenceWrong : 0,
             bestStreak: Number.isInteger(parsed.bestStreak) ? parsed.bestStreak : 0,
-            startedAt: parsed.startedAt || new Date().toISOString(),
+            currentStreak: Number.isInteger(parsed.currentStreak) ? parsed.currentStreak : 0,
+            currentRound: parsed.currentRound || null,
+            lastRoundSummary: parsed.lastRoundSummary || null,
             updatedAt: parsed.updatedAt || new Date().toISOString()
           };
         }
       } catch (err) {
-        state = {
-          currentIndex: 0,
-          answers: {},
-          points: 0,
-          streak: 0,
-          bestStreak: 0,
-          startedAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        };
+        resetState(false);
       }
     }
 
-    function currentCard() {
-      return cards[state.currentIndex] || cards[0];
+    function resetState(shouldSave) {
+      state = {
+        seenCardIds: [],
+        completedRounds: 0,
+        totalAnswered: 0,
+        totalCorrect: 0,
+        totalHighConfidenceWrong: 0,
+        bestStreak: 0,
+        currentStreak: 0,
+        currentRound: null,
+        lastRoundSummary: null,
+        updatedAt: new Date().toISOString()
+      };
+      if (storageAvailable) {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
+      }
+      if (shouldSave) saveState();
     }
 
-    function countAnswered() {
-      return Object.keys(state.answers).length;
+    function shuffle(arr) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = copy[i];
+        copy[i] = copy[j];
+        copy[j] = t;
+      }
+      return copy;
     }
 
-    function countCorrect() {
-      return Object.values(state.answers).filter(function (item) {
-        return item && item.correct === true;
-      }).length;
+    function pickRoundCards() {
+      const seenSet = new Set(state.seenCardIds);
+      const unseen = cards.filter(card => !seenSet.has(card.id)).map(card => card.id);
+      const seen = cards.filter(card => seenSet.has(card.id)).map(card => card.id);
+      let picked = shuffle(unseen).slice(0, ROUND_SIZE);
+      if (picked.length < ROUND_SIZE) picked = picked.concat(shuffle(seen).slice(0, ROUND_SIZE - picked.length));
+      return picked;
     }
 
-    function renderStats() {
-      const answered = countAnswered();
-      const correct = countCorrect();
-      const accuracy = answered ? Math.round((correct / answered) * 100) : 0;
-
-      els.points.textContent = String(state.points);
-      els.answered.textContent = answered + "/" + TOTAL_CARDS;
-      els.accuracy.textContent = accuracy + "%";
-      els.streak.textContent = String(state.streak);
+    function newRoundObject(cardIds) {
+      return {
+        roundId: Date.now(),
+        roundNumber: state.completedRounds + 1,
+        cardIds: cardIds,
+        index: 0,
+        answers: [],
+        completed: false,
+        startedAt: new Date().toISOString(),
+        completedAt: null
+      };
     }
 
-    function resetButtonStyles() {
-      els.answerButtons.forEach(function (btn) {
+    function getCardById(id) {
+      return cards.find(card => card.id === id) || cards[0];
+    }
+
+    function currentRoundCard() {
+      if (!state.currentRound) return cards[0];
+      return getCardById(state.currentRound.cardIds[state.currentRound.index]);
+    }
+
+    function currentAnswer() {
+      if (!state.currentRound) return null;
+      const card = currentRoundCard();
+      return state.currentRound.answers.find(answer => answer.cardId === card.id) || null;
+    }
+
+    function totalAccuracy() {
+      return state.totalAnswered ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0;
+    }
+
+    function renderGlobalStats() {
+      const seenCount = new Set(state.seenCardIds).size;
+      els.totalRounds.textContent = String(state.completedRounds);
+      els.totalSeen.textContent = seenCount + "/" + TOTAL_CARDS;
+      els.totalAccuracy.textContent = totalAccuracy() + "%";
+      els.bestStreak.textContent = String(state.bestStreak);
+      els.startSeen.textContent = seenCount + "/" + TOTAL_CARDS;
+      els.startRounds.textContent = String(state.completedRounds);
+      els.startAcc.textContent = totalAccuracy() + "%";
+      els.startHighWrong.textContent = String(state.totalHighConfidenceWrong);
+      els.collectionProgress.style.width = Math.round((seenCount / TOTAL_CARDS) * 100) + "%";
+      if (state.currentRound && !state.currentRound.completed) els.continueRoundBtn.classList.remove("hidden");
+      else els.continueRoundBtn.classList.add("hidden");
+    }
+
+    function showScreen(name) {
+      els.startScreen.classList.add("hidden");
+      els.gameScreen.classList.add("hidden");
+      els.summaryScreen.classList.add("hidden");
+      els.reviewScreen.classList.add("hidden");
+      if (name === "start") els.startScreen.classList.remove("hidden");
+      if (name === "game") els.gameScreen.classList.remove("hidden");
+      if (name === "summary") els.summaryScreen.classList.remove("hidden");
+      if (name === "review") els.reviewScreen.classList.remove("hidden");
+      renderGlobalStats();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function resetConfidence() {
+      selectedConfidence = "medium";
+      els.confidenceButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.confidence === selectedConfidence));
+    }
+
+    function resetAnswerButtonStyles() {
+      els.answerButtons.forEach(btn => {
         btn.classList.remove("correct", "wrong", "selectedUnknown");
         btn.disabled = false;
       });
     }
 
-    function renderCard() {
-      const card = currentCard();
+    function renderGame() {
+      if (!state.currentRound) {
+        startNewRound();
+        return;
+      }
+      const card = currentRoundCard();
+      const answer = currentAnswer();
       const padded = String(card.id).padStart(2, "0");
-      const savedAnswer = state.answers[String(card.id)];
-
       els.badge.textContent = padded;
-      els.cardMeta.textContent = "Card " + card.id + " of " + TOTAL_CARDS;
+      els.roundMeta.textContent = "Round " + state.currentRound.roundNumber + " Â· Question " + (state.currentRound.index + 1) + "/" + state.currentRound.cardIds.length;
       els.expectedPath.textContent = card.image;
-
       els.imageError.style.display = "none";
       els.photo.style.display = "block";
       els.photo.src = card.image;
-
-      resetButtonStyles();
-
-      if (savedAnswer) {
-        els.feedback.textContent = savedAnswer.message;
-        markAnsweredButtons(savedAnswer.answer, card.answer);
+      resetAnswerButtonStyles();
+      els.reveal.classList.remove("show");
+      if (answer) {
+        showReveal(answer, card, false);
+        markAnsweredButtons(answer.answer, card.answer);
       } else {
-        els.feedback.textContent = "Choose an answer. This is a synthetic demo, not a medical assessment.";
+        resetConfidence();
       }
-
-      renderStats();
+      els.nextBtn.textContent = (state.currentRound.index >= state.currentRound.cardIds.length - 1) ? "Finish round" : "Next card";
+      renderGlobalStats();
     }
 
     function markAnsweredButtons(selected, correctAnswer) {
-      els.answerButtons.forEach(function (btn) {
+      els.answerButtons.forEach(btn => {
         const value = btn.dataset.answer;
         btn.disabled = true;
-
-        if (value === correctAnswer) {
-          btn.classList.add("correct");
-        }
-
+        if (value === correctAnswer) btn.classList.add("correct");
         if (value === selected && selected !== correctAnswer) {
-          if (selected === "unknown") {
-            btn.classList.add("selectedUnknown");
-          } else {
-            btn.classList.add("wrong");
-          }
+          if (selected === "unknown") btn.classList.add("selectedUnknown");
+          else btn.classList.add("wrong");
         }
       });
     }
 
-    function makeFeedback(selected, correctAnswer, wasCorrect) {
-      if (wasCorrect) {
-        if (correctAnswer === "unknown") {
-          return "Correct. The safest answer is that the image alone is not enough.";
-        }
-        return "Correct for this synthetic demo label.";
-      }
-
-      if (correctAnswer === "unknown") {
-        return "Demo answer: not enough information. Visual guessing is unreliable.";
-      }
-
-      if (correctAnswer === "natural") {
-        return "Demo answer: natural. This is a synthetic demo label, not a medical conclusion.";
-      }
-
-      return "Demo answer: corrected / implants. This is a synthetic demo label, not a medical conclusion.";
+    function showReveal(answer, card, justAnswered) {
+      const wasCorrect = answer.correct;
+      els.reveal.classList.add("show");
+      els.resultBadge.classList.toggle("ok", wasCorrect);
+      els.resultBadge.classList.toggle("bad", !wasCorrect);
+      els.resultBadge.textContent = wasCorrect ? "Correct" : "Wrong";
+      els.yourGuess.textContent = labelText[answer.answer];
+      els.demoLabel.textContent = labelText[card.answer];
+      els.confidenceOut.textContent = confidenceText[answer.confidence];
+      els.explanation.textContent = answer.message;
+      if (justAnswered) els.reveal.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    function choose(answer) {
-      const card = currentCard();
-      const key = String(card.id);
+    function makeFeedback(answer, card, wasCorrect) {
+      if (wasCorrect) {
+        if (card.answer === "unknown") return "Correct. The safest reading is that this image alone is not enough. " + card.explanation;
+        return "Correct for the demo label. " + card.explanation;
+      }
+      if (card.answer === "unknown") return "The demo label is 'not enough information'. This is the bias trap: the image invites a guess, but the evidence is weak.";
+      return "Your guess missed the demo label. " + card.explanation;
+    }
 
-      if (state.answers[key]) return;
-
-      const wasCorrect = answer === card.answer;
-      const message = makeFeedback(answer, card.answer, wasCorrect);
-
-      state.answers[key] = {
+    function choose(answerValue) {
+      if (!state.currentRound || state.currentRound.completed) return;
+      if (currentAnswer()) return;
+      const card = currentRoundCard();
+      const wasCorrect = answerValue === card.answer;
+      const message = makeFeedback(answerValue, card, wasCorrect);
+      const answer = {
         cardId: card.id,
         image: card.image,
-        answer: answer,
+        answer: answerValue,
         correctAnswer: card.answer,
+        confidence: selectedConfidence,
         correct: wasCorrect,
         message: message,
         answeredAt: new Date().toISOString()
       };
-
+      state.currentRound.answers.push(answer);
+      state.totalAnswered += 1;
+      if (!state.seenCardIds.includes(card.id)) state.seenCardIds.push(card.id);
       if (wasCorrect) {
-        state.points += 1;
-        state.streak += 1;
-        state.bestStreak = Math.max(state.bestStreak, state.streak);
+        state.totalCorrect += 1;
+        state.currentStreak += 1;
+        state.bestStreak = Math.max(state.bestStreak, state.currentStreak);
       } else {
-        state.streak = 0;
+        if (selectedConfidence === "high") state.totalHighConfidenceWrong += 1;
+        state.currentStreak = 0;
       }
-
-      els.feedback.textContent = message;
-      markAnsweredButtons(answer, card.answer);
+      markAnsweredButtons(answerValue, card.answer);
+      showReveal(answer, card, true);
       saveState();
-      renderStats();
+      renderGlobalStats();
     }
 
     function nextCard() {
-      if (state.currentIndex < TOTAL_CARDS - 1) {
-        state.currentIndex += 1;
-      } else {
-        state.currentIndex = 0;
+      if (!state.currentRound) return;
+      if (!currentAnswer()) return;
+      if (state.currentRound.index < state.currentRound.cardIds.length - 1) {
+        state.currentRound.index += 1;
+        saveState();
+        renderGame();
+        return;
       }
-
-      saveState();
-      renderCard();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      finishRound();
     }
 
-    function resetGame() {
-      state = {
-        currentIndex: 0,
-        answers: {},
-        points: 0,
-        streak: 0,
-        bestStreak: 0,
-        startedAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
-      if (storageAvailable) {
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch (err) {}
-      }
-
-      els.jsonBox.style.display = "none";
+    function startNewRound() {
+      state.currentRound = newRoundObject(pickRoundCards());
       saveState();
-      renderCard();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      showScreen("game");
+      renderGame();
+    }
+
+    function continueRound() {
+      if (!state.currentRound || state.currentRound.completed) startNewRound();
+      else {
+        showScreen("game");
+        renderGame();
+      }
+    }
+
+    function finishRound() {
+      if (!state.currentRound || state.currentRound.completed) return;
+      const answers = state.currentRound.answers.slice();
+      const correct = answers.filter(a => a.correct).length;
+      const unknownPicks = answers.filter(a => a.answer === "unknown").length;
+      const highWrong = answers.filter(a => a.confidence === "high" && !a.correct).length;
+      const bestRoundStreak = calculateBestRoundStreak(answers);
+      const accuracy = answers.length ? Math.round((correct / answers.length) * 100) : 0;
+      const profile = makeProfile(correct, answers.length, unknownPicks, highWrong);
+
+      state.currentRound.completed = true;
+      state.currentRound.completedAt = new Date().toISOString();
+      state.completedRounds += 1;
+      state.lastRoundSummary = {
+        roundId: state.currentRound.roundId,
+        roundNumber: state.currentRound.roundNumber,
+        score: correct,
+        total: answers.length,
+        accuracy: accuracy,
+        bestStreak: bestRoundStreak,
+        highConfidenceWrong: highWrong,
+        unknownPicks: unknownPicks,
+        profileTitle: profile.title,
+        profileText: profile.text,
+        answers: answers,
+        completedAt: new Date().toISOString()
+      };
+      state.currentRound = null;
+      saveState();
+      renderSummary();
+      showScreen("summary");
+    }
+
+    function calculateBestRoundStreak(answers) {
+      let best = 0, current = 0;
+      answers.forEach(answer => {
+        if (answer.correct) {
+          current += 1;
+          best = Math.max(best, current);
+        } else current = 0;
+      });
+      return best;
+    }
+
+    function makeProfile(correct, total, unknownPicks, highWrong) {
+      const accuracy = total ? correct / total : 0;
+      if (highWrong >= 3) return { title: "Overconfident Judge", text: "You made several high-confidence misses. This exposes where visual certainty becomes unreliable." };
+      if (unknownPicks >= 5 && accuracy >= 0.6) return { title: "Careful Observer", text: "You used 'not enough information' often and avoided forcing conclusions. This is the most defensible strategy for image-only judgment." };
+      if (accuracy >= 0.8) return { title: "Pattern Reader", text: "Strong score for this demo round. The next challenge is to stay cautious when the image appears obvious." };
+      if (accuracy >= 0.55) return { title: "Balanced Guesser", text: "You caught some patterns but still fell into a few visual traps. The review screen will show where confidence and evidence diverged." };
+      return { title: "Visual Bias Trap", text: "This round shows how easy it is to over-read a single image. The useful lesson is not the label itself, but how fast the mind creates certainty." };
+    }
+
+    function renderSummary() {
+      const s = state.lastRoundSummary;
+      if (!s) { showScreen("start"); return; }
+      els.profileTitle.textContent = s.profileTitle;
+      els.profileText.textContent = s.profileText;
+      els.roundScore.textContent = s.score + "/" + s.total;
+      els.roundAccuracy.textContent = s.accuracy + "%";
+      els.roundBestStreak.textContent = String(s.bestStreak);
+      els.roundHighWrong.textContent = String(s.highConfidenceWrong);
+      els.jsonBox.style.display = "none";
+      renderGlobalStats();
+    }
+
+    function renderReview() {
+      const s = state.lastRoundSummary;
+      if (!s) { showScreen("start"); return; }
+      els.reviewList.innerHTML = "";
+      s.answers.forEach(answer => {
+        const item = document.createElement("div");
+        item.className = "reviewItem";
+        const img = document.createElement("img");
+        img.src = answer.image;
+        img.alt = "Card " + answer.cardId;
+        const text = document.createElement("div");
+        text.className = "reviewText";
+        const title = document.createElement("strong");
+        title.textContent = "#" + String(answer.cardId).padStart(2, "0") + " Â· " + (answer.correct ? "Correct" : "Wrong");
+        const details = document.createElement("div");
+        details.textContent = "Your guess: " + labelText[answer.answer] + " Â· Demo label: " + labelText[answer.correctAnswer] + " Â· Confidence: " + confidenceText[answer.confidence];
+        text.appendChild(title);
+        text.appendChild(details);
+        item.appendChild(img);
+        item.appendChild(text);
+        els.reviewList.appendChild(item);
+      });
     }
 
     function exportJSON() {
-      const payload = {
-        exportedAt: new Date().toISOString(),
-        totalCards: TOTAL_CARDS,
-        stats: {
-          points: state.points,
-          answered: countAnswered(),
-          correct: countCorrect(),
-          streak: state.streak,
-          bestStreak: state.bestStreak
-        },
-        state: state
-      };
-
+      const payload = { exportedAt: new Date().toISOString(), totalCards: TOTAL_CARDS, roundSize: ROUND_SIZE, state: state };
       els.jsonOutput.value = JSON.stringify(payload, null, 2);
       els.jsonBox.style.display = "block";
       els.jsonOutput.focus();
@@ -679,51 +655,39 @@
     }
 
     function bindEvents() {
-      els.answerButtons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          choose(btn.dataset.answer);
+      els.startRoundBtn.addEventListener("click", startNewRound);
+      els.continueRoundBtn.addEventListener("click", continueRound);
+      els.resetAllBtn.addEventListener("click", () => { resetState(true); renderGlobalStats(); showScreen("start"); });
+      els.confidenceButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedConfidence = btn.dataset.confidence;
+          els.confidenceButtons.forEach(other => other.classList.toggle("active", other === btn));
         });
       });
-
+      els.answerButtons.forEach(btn => btn.addEventListener("click", () => choose(btn.dataset.answer)));
       els.nextBtn.addEventListener("click", nextCard);
-      els.resetBtn.addEventListener("click", resetGame);
+      els.quitRoundBtn.addEventListener("click", () => { saveState(); showScreen("start"); });
+      els.playAgainBtn.addEventListener("click", startNewRound);
+      els.reviewBtn.addEventListener("click", () => { renderReview(); showScreen("review"); });
+      els.summaryHomeBtn.addEventListener("click", () => showScreen("start"));
       els.exportBtn.addEventListener("click", exportJSON);
-
-      els.photo.addEventListener("error", function () {
-        els.photo.style.display = "none";
-        els.imageError.style.display = "block";
-      });
-
-      els.photo.addEventListener("load", function () {
-        els.photo.style.display = "block";
-        els.imageError.style.display = "none";
-      });
+      els.reviewBackBtn.addEventListener("click", () => { renderSummary(); showScreen("summary"); });
+      els.reviewHomeBtn.addEventListener("click", () => showScreen("start"));
+      els.photo.addEventListener("error", () => { els.photo.style.display = "none"; els.imageError.style.display = "block"; });
+      els.photo.addEventListener("load", () => { els.photo.style.display = "block"; els.imageError.style.display = "none"; });
     }
 
     function init() {
       testStorage();
       loadState();
-
-      if (state.currentIndex < 0 || state.currentIndex >= TOTAL_CARDS) {
-        state.currentIndex = 0;
-      }
-
       bindEvents();
-      renderCard();
-      window.__quizDebug = {
-        cards: cards,
-        state: state,
-        choose: choose,
-        nextCard: nextCard,
-        resetGame: resetGame
-      };
+      renderGlobalStats();
+      showScreen("start");
+      window.__quizDebug = { cards, state, startNewRound, choose, nextCard, finishRound, resetState };
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init);
-    } else {
-      init();
-    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
   </script>
 </body>
 </html>
